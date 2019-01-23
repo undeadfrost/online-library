@@ -2,6 +2,7 @@ const commonService = require('../service/commonService')
 const userService = require('../service/userService')
 const routeService = require('../service/routeService')
 const roleService = require('../service/roleService')
+const bookService = require('../service/bookService')
 
 let adminController = {}
 
@@ -213,6 +214,14 @@ adminController.uploadHead = () => {
 		// 上传单个文件
 		const file = ctx.request.files.file
 		ctx.body = await userService.uploadHead(ctx.user, file)
+	}
+}
+
+adminController.getBookTypes = () => {
+	return async ctx => {
+		let {searchKey} = ctx.query
+		if (!searchKey) searchKey = ''
+		ctx.body = await bookService.getBookTypes(searchKey)
 	}
 }
 

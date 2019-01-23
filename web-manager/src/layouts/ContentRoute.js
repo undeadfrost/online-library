@@ -6,6 +6,7 @@ import UserList from '../pages/User/UserList'
 import Role from '../pages/Role/index'
 import Menu from '../pages/Menu/index'
 import Personal from '../pages/User/Personal/index'
+import BookTypes from '../pages/Book/Types/index'
 import _404 from '../pages/Error/_404'
 
 class ContentRoute extends React.Component {
@@ -19,6 +20,7 @@ class ContentRoute extends React.Component {
 				<PermissionRoute path='/admin/menu' component={Menu}/>
 				<Route path='/admin/personal' exact render={() => (<Redirect to='/admin/personal/basic'/>)}/>
 				<Route path='/admin/personal/:page' component={Personal}/>
+				<Route path='/admin/book/types' component={BookTypes}/>
 				<Route path='*' component={_404}/>
 			</Switch>
 		)

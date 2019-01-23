@@ -79,3 +79,7 @@ export const fetchPutMyBasic = (params) => {
 export const fetchPutMySecurity = (params) => {
 	return http('put', '/admin/my/security', params)
 }
+
+export const fetchGetBookTypes = (params) => {
+	return http('get', '/admin/book/types', params)
+}

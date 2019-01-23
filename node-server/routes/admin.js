@@ -39,7 +39,12 @@ router.put('/menu/info', permissionCheck('sys:menu:update'), adminController.put
 router.put('/my/basic', requestUser(), adminController.putMyBasic())
 router.post('/my/upload/head', requestUser(), adminController.uploadHead())
 router.put('/my/security', requestUser(), adminController.putMySecurity())
+
 // 路由权鉴
 router.post('/route/auth', adminController.getAuth())
+
+// 图书种类
+router.get('/book/types', permissionCheck('sys:bookType:list'), adminController.getBookTypes());
+
 
 module.exports = router

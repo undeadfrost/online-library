@@ -30,7 +30,7 @@ const Books = sequelize.define('books', {
     }
   },
   publishing: {
-    type: Sequelize.INTEGER(50),
+    type: Sequelize.STRING(50),
   },
   timeLimit: {
     type: Sequelize.INTEGER(10),
