@@ -1,6 +1,7 @@
 import React, {Component} from 'react'
-import {Table, Divider, Popconfirm} from 'antd'
+import {Table, Divider, Popconfirm, message} from 'antd'
 import {connect} from 'react-redux'
+import {fetchDelBookType} from '../../../api/index'
 
 const rowSelection = {
 	onChange: (selectedRowKeys, selectedRows) => {
@@ -51,8 +52,12 @@ class BookTypesTable extends Component {
 	
 	}
 	
-	delConfirm = () => {
-	
+	delConfirm = async (bookTypeId) => {
+		const delBookTypeRes = await fetchDelBookType({bookTypeId})
+		if (delBookTypeRes.code === 1) {
+			message.error(delBookTypeRes['msg'])
+		}
+		await this.props.getBookTypes()
 	}
 	
 	render() {

@@ -25,7 +25,7 @@ class BookTypes extends Component {
 		return (
 			<Fragment>
 				<BookTypesActionBar title={'新增图书种类'} getBookTypes={this.getBookTypes}/>
-				<BookTypesTable/>
+				<BookTypesTable getBookTypes={this.getBookTypes}/>
 			</Fragment>
 		)
 	}

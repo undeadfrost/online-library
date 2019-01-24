@@ -87,3 +87,7 @@ export const fetchGetBookTypes = (params) => {
 export const fetchAddBookType = (params) => {
 	return http('post', '/admin/book/type', params)
 }
+
+export const fetchDelBookType = (params) => {
+	return http('delete', '/admin/book/type', params)
+}

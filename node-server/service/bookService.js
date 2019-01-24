@@ -27,4 +27,13 @@ bookService.addBookTypes = async (typeName, detail) => {
 	}
 }
 
+bookService.delBookType = async (bookTypeId) => {
+	try {
+		await BookType.destroy({where: {id: bookTypeId}})
+		return {code: 0, msg: '删除成功'}
+	} catch (e) {
+		return {code: 1, msg: '删除错误'}
+	}
+}
+
 module.exports = bookService
