@@ -45,6 +45,7 @@ router.post('/route/auth', adminController.getAuth())
 
 // 图书种类
 router.get('/book/types', permissionCheck('sys:bookType:list'), adminController.getBookTypes());
+router.post('/book/type', permissionCheck('sys:bookType:save'), adminController.addBookType())
 
 
 module.exports = router

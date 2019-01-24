@@ -225,4 +225,15 @@ adminController.getBookTypes = () => {
 	}
 }
 
+adminController.addBookType = () => {
+	return async ctx => {
+		const {typeName, detail} = ctx.request.body
+		if (typeName) {
+			ctx.body = await bookService.addBookTypes(typeName, detail)
+		} else {
+			ctx.body = {code: 1, msg: '参数有误'}
+		}
+	}
+}
+
 module.exports = adminController

@@ -83,3 +83,7 @@ export const fetchPutMySecurity = (params) => {
 export const fetchGetBookTypes = (params) => {
 	return http('get', '/admin/book/types', params)
 }
+
+export const fetchAddBookType = (params) => {
+	return http('post', '/admin/book/type', params)
+}

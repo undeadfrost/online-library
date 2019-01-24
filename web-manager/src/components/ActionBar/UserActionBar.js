@@ -91,7 +91,6 @@ class UserActionBar extends Component {
 		const form = this.props.form
 		const ItemMap = Map.user
 		const selectItem = ItemMap.select
-		console.log(this.state.roles)
 		return (
 			<div className={styles.action_bar}>
 				<Search
@@ -106,7 +105,8 @@ class UserActionBar extends Component {
 					title={this.props.title}
 					visible={this.state.visible}
 					onOk={this.handleOk}
-					onCancel={this.handleCancel}>
+					onCancel={this.handleCancel}
+					confirmLoading={this.state.confirmLoading}>
 					<Form onSubmit={this.handleOk}>
 						{
 							ItemMap.input.map(item => (

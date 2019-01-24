@@ -17,6 +17,9 @@ const mapStateToProps = state => ({bookTypes: state.booksData.bookTypes})
 class BookTypesTable extends Component {
 	state = {
 		columns: [{
+			title: 'ID',
+			dataIndex: 'id',
+		}, {
 			title: '种类名称',
 			dataIndex: 'typeName',
 		}, {
@@ -56,6 +59,7 @@ class BookTypesTable extends Component {
 		const dataSource = this.props.bookTypes
 		return (
 			<Table
+				rowKey="id"
 				bordered
 				rowSelection={rowSelection}
 				columns={this.state.columns}

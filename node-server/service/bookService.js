@@ -15,4 +15,16 @@ bookService.getBookTypes = async (searchKey) => {
 	return bookTypes
 }
 
+bookService.addBookTypes = async (typeName, detail) => {
+	try {
+		await BookType.create({
+			typeName: typeName,
+			detail: detail
+		})
+		return {code: 0, msg: '新增成功'}
+	} catch (e) {
+		return {code: 1, msg: '新增失败'}
+	}
+}
+
 module.exports = bookService
