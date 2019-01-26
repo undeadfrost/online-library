@@ -243,4 +243,11 @@ adminController.delBookType = () => {
 	}
 }
 
+adminController.getBookTypeInfo = () => {
+	return async ctx => {
+		const {bookTypeId} = ctx.query
+		ctx.body = await bookService.getBookTypeInfo(bookTypeId)
+	}
+}
+
 module.exports = adminController

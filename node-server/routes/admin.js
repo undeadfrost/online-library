@@ -47,6 +47,7 @@ router.post('/route/auth', adminController.getAuth())
 router.get('/book/types', permissionCheck('sys:bookType:list'), adminController.getBookTypes())
 router.post('/book/type', permissionCheck('sys:bookType:save'), adminController.addBookType())
 router.delete('/book/type', permissionCheck('sys:bookType:delete'), adminController.delBookType())
+router.get('/book/type', permissionCheck('sys:bookType:info'), adminController.getBookTypeInfo())
 
 
 module.exports = router

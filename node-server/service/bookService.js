@@ -36,4 +36,9 @@ bookService.delBookType = async (bookTypeId) => {
 	}
 }
 
+bookService.getBookTypeInfo = async (bookTypeId) => {
+	const bookTypeInfo = await BookType.findById(bookTypeId)
+	return bookTypeInfo
+}
+
 module.exports = bookService

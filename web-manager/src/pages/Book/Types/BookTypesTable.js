@@ -48,8 +48,8 @@ class BookTypesTable extends Component {
 		}]
 	}
 	
-	menuRowConfiguration = () => {
-	
+	menuRowConfiguration = async (record) => {
+		this.props.setModalVisible(record.id, true)
 	}
 	
 	delConfirm = async (bookTypeId) => {
