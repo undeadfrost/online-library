@@ -1,7 +1,7 @@
 import React, {Component} from 'react'
 import {Table, Divider, Popconfirm, message} from 'antd'
 import {connect} from 'react-redux'
-import {fetchDelBookType} from '../../../api/index'
+import {fetchDelBook} from '../../../api/index'
 
 const rowSelection = {
 	onChange: (selectedRowKeys, selectedRows) => {
@@ -13,19 +13,37 @@ const rowSelection = {
 	}),
 };
 
-const mapStateToProps = state => ({bookTypes: state.booksData.bookTypes})
+const mapStateToProps = state => ({bookList: state.booksData.bookList})
 
-class BookTypesTable extends Component {
+class BookInfoTable extends Component {
 	state = {
 		columns: [{
 			title: 'ID',
 			dataIndex: 'id',
 		}, {
-			title: '种类名称',
-			dataIndex: 'typeName',
+			title: '编号',
+			dataIndex: 'number',
 		}, {
-			title: '种类详情',
-			dataIndex: 'detail',
+			title: '书名',
+			dataIndex: 'bname',
+		}, {
+			title: '作者',
+			dataIndex: 'author',
+		}, {
+			title: '分类',
+			dataIndex: 'book_type',
+			render: (text) => (
+				<span>{text.typeName}</span>
+			)
+		}, {
+			title: '出版社',
+			dataIndex: 'publishing',
+		}, {
+			title: '借阅期限',
+			dataIndex: 'timeLimit',
+			render: (text) => (
+				<span>{`${text}天`}</span>
+			)
 		}, {
 			title: '操作',
 			key: 'action',
@@ -48,20 +66,20 @@ class BookTypesTable extends Component {
 		}]
 	}
 	
-	configuration = async (record) => {
-		this.props.setModalVisible(record.id, true)
+	configuration = (record) => {
+	
 	}
 	
-	delConfirm = async (bookTypeId) => {
-		const delBookTypeRes = await fetchDelBookType({bookTypeId})
-		if (delBookTypeRes.code === 1) {
-			message.error(delBookTypeRes['msg'])
+	delConfirm = async (bookId) => {
+		const delBookRes = await fetchDelBook({bookId: bookId})
+		if (delBookRes.code === 1) {
+			message.error(delBookRes['msg'])
 		}
-		await this.props.getBookTypes()
+		await this.props.getBookList()
 	}
 	
 	render() {
-		const dataSource = this.props.bookTypes
+		const dataSource = this.props.bookList
 		return (
 			<Table
 				rowKey="id"
@@ -69,8 +87,8 @@ class BookTypesTable extends Component {
 				rowSelection={rowSelection}
 				columns={this.state.columns}
 				dataSource={dataSource}/>
-		);
+		)
 	}
 }
 
-export default connect(mapStateToProps)(BookTypesTable)
+export default connect(mapStateToProps)(BookInfoTable)

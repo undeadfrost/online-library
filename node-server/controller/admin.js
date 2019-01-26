@@ -250,4 +250,19 @@ adminController.getBookTypeInfo = () => {
 	}
 }
 
+adminController.getBooks = () => {
+	return async ctx => {
+		let {nameKey} = ctx.query
+		if (!nameKey) nameKey = ''
+		ctx.body = await bookService.getBooks(nameKey)
+	}
+}
+
+adminController.delBook = () => {
+	return async ctx => {
+		let {bookId} = ctx.query
+		ctx.body = await bookService.delBook(bookId)
+	}
+}
+
 module.exports = adminController
