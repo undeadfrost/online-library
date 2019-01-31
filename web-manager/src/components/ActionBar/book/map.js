@@ -52,4 +52,165 @@ map.bookTypes = {
 	],
 }
 
+map.book = {
+	input: [
+		{
+			id: 'number',
+			options: {
+				rules: [
+					{
+						required: true,
+						message: 'Please input your number!',
+					},
+				],
+			},
+			formItemParams: {
+				label: '编号',
+				labelCol: {
+					xs: {span: 24},
+					sm: {span: 4},
+				},
+				wrapperCol: {
+					xs: {span: 24},
+					sm: {span: 18},
+				},
+			},
+			props: {
+				type: 'text',
+				placeholder: '编号',
+			}
+		},
+		{
+			id: 'bname',
+			options: {
+				rules: [
+					{
+						required: true,
+						message: 'Please input your bname!',
+					},
+				],
+			},
+			formItemParams: {
+				label: '书名',
+				labelCol: {
+					xs: {span: 24},
+					sm: {span: 4},
+				},
+				wrapperCol: {
+					xs: {span: 24},
+					sm: {span: 18},
+				},
+			},
+			props: {
+				type: 'text',
+				placeholder: '书名',
+			}
+		},
+		{
+			id: 'author',
+			options: {
+				rules: [
+					{
+						required: true,
+						message: 'Please input your author!',
+					},
+				],
+			},
+			formItemParams: {
+				label: '作者',
+				labelCol: {
+					xs: {span: 24},
+					sm: {span: 4},
+				},
+				wrapperCol: {
+					xs: {span: 24},
+					sm: {span: 18},
+				},
+			},
+			props: {
+				type: 'text',
+				placeholder: '作者',
+			}
+		},
+		{
+			id: 'publishing',
+			options: {
+				rules: [
+					{
+						required: true,
+						message: 'Please input your publishing!',
+					},
+				],
+			},
+			formItemParams: {
+				label: '出版社',
+				labelCol: {
+					xs: {span: 24},
+					sm: {span: 4},
+				},
+				wrapperCol: {
+					xs: {span: 24},
+					sm: {span: 18},
+				},
+			},
+			props: {
+				type: 'text',
+				placeholder: '出版社',
+			}
+		},
+	],
+	number: {
+		id: 'timeLimit',
+		options: {
+			rules: [
+				{
+					required: true,
+					message: 'Please input your timeLimit!',
+				},
+			],
+			initialValue: 7,
+		},
+		formItemParams: {
+			label: '借阅期限',
+			labelCol: {
+				xs: {span: 24},
+				sm: {span: 4},
+			},
+			wrapperCol: {
+				xs: {span: 24},
+				sm: {span: 18},
+			},
+		},
+		props: {
+			min: 1,
+			max: 365,
+			formatter: value => `${value}`.replace(/\^[0-9]*$/g, ''),
+		}
+	},
+	select: [
+		{
+			id: 'book_type',
+			options: {
+				rules: [
+					{
+						required: true,
+						message: 'Please select your bookType!',
+					},
+				],
+			},
+			formItemParams: {
+				label: '图书分类',
+				labelCol: {
+					xs: {span: 24},
+					sm: {span: 4},
+				},
+				wrapperCol: {
+					xs: {span: 24},
+					sm: {span: 18},
+				},
+			},
+		},
+	]
+}
+
 export default map

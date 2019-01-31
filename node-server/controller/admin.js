@@ -265,4 +265,10 @@ adminController.delBook = () => {
 	}
 }
 
+adminController.addBook = () => {
+	return async ctx => {
+		const {number, bname, author, publishing, timeLimit, book_type} = ctx.request.body
+	}
+}
+
 module.exports = adminController

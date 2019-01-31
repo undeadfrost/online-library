@@ -8,7 +8,6 @@ class SelectItem extends Component {
 	render() {
 		const {id, options, form, formItemParams, selectData, ...customprops} = this.props
 		const {getFieldDecorator} = form
-		console.log(selectData)
 		return (
 			<FormItem {...formItemParams}>
 				{getFieldDecorator(id, options)(

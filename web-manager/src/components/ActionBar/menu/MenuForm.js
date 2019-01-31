@@ -8,7 +8,6 @@ class MenuForm extends Component {
 	render() {
 		const form = this.props.form
 		const ItemMap = Map.menu
-		console.log(this.props.selectData)
 		return (
 			<Fragment>
 				{

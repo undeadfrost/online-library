@@ -63,4 +63,8 @@ bookService.delBook = async (bookId) => {
 	}
 }
 
+bookService.addBook = async () => {
+
+}
+
 module.exports = bookService
