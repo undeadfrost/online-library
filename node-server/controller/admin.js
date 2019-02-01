@@ -252,9 +252,9 @@ adminController.getBookTypeInfo = () => {
 
 adminController.getBooks = () => {
 	return async ctx => {
-		let {nameKey} = ctx.query
-		if (!nameKey) nameKey = ''
-		ctx.body = await bookService.getBooks(nameKey)
+		let {searchKey} = ctx.query
+		if (!searchKey) searchKey = ''
+		ctx.body = await bookService.getBooks(searchKey)
 	}
 }
 
@@ -268,6 +268,11 @@ adminController.delBook = () => {
 adminController.addBook = () => {
 	return async ctx => {
 		const {number, bname, author, publishing, timeLimit, book_type} = ctx.request.body
+		if (number && bname && author && publishing && timeLimit) {
+			ctx.body = await bookService.addBook(number, bname, author, publishing, timeLimit, book_type)
+		} else {
+			ctx.body = {code: 1, msg: '参数有误'}
+		}
 	}
 }
 

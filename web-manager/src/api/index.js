@@ -103,3 +103,7 @@ export const fetchGetBooks = (params) => {
 export const fetchDelBook = (params) => {
 	return http('delete', '/admin/book', params)
 }
+
+export const fetchAddBook = (params) => {
+	return http('post', '/admin/book', params)
+}

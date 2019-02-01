@@ -33,7 +33,7 @@ class Information extends Component {
 	render() {
 		return (
 			<Fragment>
-				<BookActionBar title={'新增图书'} bookTypes={this.state.bookTypes}/>
+				<BookActionBar title={'新增图书'} bookTypes={this.state.bookTypes} getBooks={this.getBookList}/>
 				<BookInfoTable getBookList={this.getBookList}/>
 			</Fragment>
 		)

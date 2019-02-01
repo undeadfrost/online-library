@@ -1,19 +1,21 @@
 import React, {Component} from 'react'
-import {Input, Button, Modal, Form} from 'antd'
+import {Input, Button, Modal, Form, message} from 'antd'
 import styles from '../index.module.less'
 import InputItem from '../../Form/InputItem'
 import NumberItem from '../../Form/NumberItem'
 import SelectItem from '../../Form/SelectItem'
+import {fetchAddBook} from '../../../api/index'
 import Map from './map'
 
 const Search = Input.Search
 
 class BookActionBar extends Component {
 	state = {
-		visible: false
+		visible: false,
 	}
 	
-	onSearch = (value) => {
+	onSearch = async (value) => {
+		await this.props.getBooks({searchKey: value})
 	}
 	
 	showModal = () => {
@@ -23,12 +25,21 @@ class BookActionBar extends Component {
 	handleOk = () => {
 		this.props.form.validateFields(async (err, values) => {
 			if (!err) {
-				console.log(values)
+				const addBookRes = await fetchAddBook(values)
+				if (addBookRes.code === 0) {
+					this.setState({visible: false})
+					this.props.form.resetFields()
+					await this.props.getBooks()
+					message.success(addBookRes.msg)
+				} else {
+					message.error(addBookRes.msg)
+				}
 			}
 		})
 	}
 	handleCancel = () => {
 		this.setState({visible: false})
+		this.props.form.resetFields()
 	}
 	
 	render() {

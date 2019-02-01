@@ -192,10 +192,6 @@ map.book = {
 			id: 'book_type',
 			options: {
 				rules: [
-					{
-						required: true,
-						message: 'Please select your bookType!',
-					},
 				],
 			},
 			formItemParams: {

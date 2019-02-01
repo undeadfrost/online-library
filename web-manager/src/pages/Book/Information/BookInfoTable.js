@@ -33,7 +33,7 @@ class BookInfoTable extends Component {
 			title: '分类',
 			dataIndex: 'book_type',
 			render: (text) => (
-				<span>{text.typeName}</span>
+				text && <span>{text.typeName}</span>
 			)
 		}, {
 			title: '出版社',

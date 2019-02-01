@@ -42,14 +42,39 @@ bookService.getBookTypeInfo = async (bookTypeId) => {
 	return bookTypeInfo
 }
 
-bookService.getBooks = async (nameKey) => {
+bookService.getBooks = async (searchKey) => {
 	const books = await Books.findAll({
-		include: [{model: BookType, attributes: ['typeName']}],
-		where: {
-			bname: {
-				[Op.like]: `%${nameKey}%`
+		include: [
+			{
+				model: BookType,
+				as: 'bookType',
+				attributes: ['typeName'],
 			}
-		}
+		],
+		where: {
+			[Op.or]: [
+				{
+					number: {
+						[Op.like]: `%${searchKey}%`
+					}
+				},
+				{
+					bname: {
+						[Op.like]: `%${searchKey}%`
+					}
+				},
+				{
+					author: {
+						[Op.like]: `%${searchKey}%`
+					}
+				},
+				{
+					publishing: {
+						[Op.like]: `%${searchKey}%`
+					}
+				},
+			]
+		},
 	})
 	return books
 }
@@ -63,8 +88,25 @@ bookService.delBook = async (bookId) => {
 	}
 }
 
-bookService.addBook = async () => {
-
+bookService.addBook = async (number, bname, author, publishing, timeLimit, book_type) => {
+	let bookTypeId = null
+	if (book_type) {
+		bookTypeId = book_type.key
+	}
+	try {
+		await Books.create({
+			number: number,
+			bname: bname,
+			author: author,
+			publishing: publishing,
+			timeLimit: timeLimit,
+			bookTypeId: bookTypeId
+		})
+		return {code: 0, msg: '新增成功'}
+	} catch (e) {
+		return {code: 1, msg: '新增失败'}
+	}
+	
 }
 
 module.exports = bookService
