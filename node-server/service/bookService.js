@@ -38,8 +38,7 @@ bookService.delBookType = async (bookTypeId) => {
 }
 
 bookService.getBookTypeInfo = async (bookTypeId) => {
-	const bookTypeInfo = await BookType.findById(bookTypeId)
-	return bookTypeInfo
+	return await BookType.findById(bookTypeId)
 }
 
 bookService.getBooks = async (searchKey) => {
@@ -47,7 +46,6 @@ bookService.getBooks = async (searchKey) => {
 		include: [
 			{
 				model: BookType,
-				as: 'bookType',
 				attributes: ['typeName'],
 			}
 		],
@@ -106,7 +104,10 @@ bookService.addBook = async (number, bname, author, publishing, timeLimit, book_
 	} catch (e) {
 		return {code: 1, msg: '新增失败'}
 	}
-	
+}
+
+bookService.getBookInfo = async (bookId) => {
+	return await Books.findById(bookId)
 }
 
 module.exports = bookService

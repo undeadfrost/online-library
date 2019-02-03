@@ -67,7 +67,7 @@ class BookInfoTable extends Component {
 	}
 	
 	configuration = (record) => {
-	
+		this.props.setModalVisible(record.id, true)
 	}
 	
 	delConfirm = async (bookId) => {

@@ -5,6 +5,7 @@ import {updateBookList} from '../../../redux/actions/book.actions'
 import {fetchGetBooks, fetchGetBookTypes} from '../../../api/index'
 import BookInfoTable from './BookInfoTable'
 import BookActionBar from '../../../components/ActionBar/book/BookActionBar'
+import BookInfoModal from './BookInfoModal'
 
 const mapStateToProps = state => ({})
 
@@ -12,7 +13,9 @@ const mapDispatchToProps = dispatch => bindActionCreators({updateBookList}, disp
 
 class Information extends Component {
 	state = {
-		bookTypes: []
+		bookTypes: [],
+		bookId: '',
+		modalVisible: false
 	}
 	
 	async componentDidMount() {
@@ -30,11 +33,28 @@ class Information extends Component {
 		this.setState({bookTypes: bookTypes})
 	}
 	
+	setModalVisible = (bookId, visible) => {
+		this.setState({bookId: bookId, modalVisible: visible})
+	}
+	
 	render() {
 		return (
 			<Fragment>
-				<BookActionBar title={'新增图书'} bookTypes={this.state.bookTypes} getBooks={this.getBookList}/>
-				<BookInfoTable getBookList={this.getBookList}/>
+				<BookActionBar
+					title={'新增图书'}
+					bookTypes={this.state.bookTypes}
+					getBooks={this.getBookList}/>
+				<BookInfoTable
+					getBookList={this.getBookList}
+					setModalVisible={this.setModalVisible}/>
+				{
+					this.state.modalVisible && <BookInfoModal
+						title={'配置图书'}
+						setVisible={this.setModalVisible}
+						visible={this.state.modalVisible}
+						bookId={this.state.bookId}
+						bookTypes={this.state.bookTypes}/>
+				}
 			</Fragment>
 		)
 	}

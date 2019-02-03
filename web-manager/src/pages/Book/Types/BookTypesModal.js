@@ -14,7 +14,7 @@ class BookTypesModal extends Component {
 	
 	async componentDidMount() {
 		const bookTypeInfo = await fetchGetBookTypeInfo({bookTypeId: this.props.bookTypeId})
-		this.props.form.setFieldsValue({...bookTypeInfo})
+		this.props.form.setFieldsValue(bookTypeInfo)
 	}
 	
 	render() {

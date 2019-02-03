@@ -276,4 +276,11 @@ adminController.addBook = () => {
 	}
 }
 
+adminController.getBookInfo = () => {
+	return async ctx => {
+		const {bookId} = ctx.query
+		ctx.body = await bookService.getBookInfo(bookId)
+	}
+}
+
 module.exports = adminController
