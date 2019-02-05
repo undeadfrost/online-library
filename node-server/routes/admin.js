@@ -48,12 +48,14 @@ router.get('/book/types', permissionCheck('sys:bookType:list'), adminController.
 router.post('/book/type', permissionCheck('sys:bookType:save'), adminController.addBookType())
 router.delete('/book/type', permissionCheck('sys:bookType:delete'), adminController.delBookType())
 router.get('/book/type', permissionCheck('sys:bookType:info'), adminController.getBookTypeInfo())
+router.put('/book/type', permissionCheck('sys:bookType:update'), adminController.putBookTypeInfo())
 
 // 图书信息
 router.get('/books', permissionCheck('sys:book:list'), adminController.getBooks())
 router.delete('/book', permissionCheck('sys:book:delete'), adminController.delBook())
 router.post('/book', permissionCheck('sys:book:save'), adminController.addBook())
 router.get('/book/info', permissionCheck('sys:book:info'), adminController.getBookInfo())
+router.put('/book/info', permissionCheck('sys:book:update'), adminController.putBookInfo())
 
 
 module.exports = router

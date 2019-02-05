@@ -41,6 +41,19 @@ bookService.getBookTypeInfo = async (bookTypeId) => {
 	return await BookType.findById(bookTypeId)
 }
 
+bookService.putBookTypeInfo = async (bookTypeId, typeName, detail) => {
+	try {
+		const bookType = await BookType.findById(bookTypeId)
+		await bookType.update({
+			typeName: typeName,
+			detail: detail
+		})
+		return {code: 0, msg: '更新成功'}
+	} catch (e) {
+		return {code: 1, msg: '更新失败'}
+	}
+}
+
 bookService.getBooks = async (searchKey) => {
 	const books = await Books.findAll({
 		include: [
@@ -107,7 +120,31 @@ bookService.addBook = async (number, bname, author, publishing, timeLimit, book_
 }
 
 bookService.getBookInfo = async (bookId) => {
-	return await Books.findById(bookId)
+	return await Books.findOne({
+		include: [
+			{
+				model: BookType,
+			}
+		],
+		where: {id: bookId}
+	})
+}
+
+bookService.putBookInfo = async (bookId, number, bname, author, publishing, timeLimit, bookTypeId) => {
+	const book = await Books.findById(bookId)
+	try {
+		await book.update({
+			number: number,
+			bname: bname,
+			author: author,
+			publishing: publishing,
+			timeLimit: timeLimit,
+			bookTypeId: bookTypeId
+		})
+		return {code: 0, msg: '更新成功'}
+	} catch (e) {
+		return {code: 1, msg: '更新失败'}
+	}
 }
 
 module.exports = bookService

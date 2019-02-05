@@ -53,7 +53,8 @@ class Information extends Component {
 						setVisible={this.setModalVisible}
 						visible={this.state.modalVisible}
 						bookId={this.state.bookId}
-						bookTypes={this.state.bookTypes}/>
+						bookTypes={this.state.bookTypes}
+						getBookList={this.getBookList}/>
 				}
 			</Fragment>
 		)

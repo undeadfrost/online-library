@@ -41,7 +41,8 @@ class BookTypes extends Component {
 						title={'配置种类'}
 						setVisible={this.setModalVisible}
 						bookTypeId={this.state.bookTypeId}
-						visible={this.state.modalVisible}/>
+						visible={this.state.modalVisible}
+						getBookType={this.getBookTypes}/>
 				}
 			</Fragment>
 		)

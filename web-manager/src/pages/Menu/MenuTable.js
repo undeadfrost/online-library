@@ -53,7 +53,7 @@ class MenuTable extends Component {
 		}
 	}
 	
-	menuRowConfiguration = async (record) => {
+	menuRowConfiguration = (record) => {
 		this.props.setMenuModalData(record.id, true)
 	}
 	

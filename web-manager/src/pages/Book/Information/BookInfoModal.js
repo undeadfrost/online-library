@@ -1,6 +1,6 @@
 import React, {Component} from 'react'
-import {Modal, Form} from 'antd'
-import {fetchGetBookInfo} from '../../../api/index'
+import {Modal, Form, message} from 'antd'
+import {fetchGetBookInfo, fetchPutBookInfo} from '../../../api/index'
 import InputItem from '../../../components/Form/InputItem'
 import SelectItem from '../../../components/Form/SelectItem'
 import NumberItem from '../../../components/Form/NumberItem'
@@ -8,7 +8,24 @@ import Map from '../../../components/ActionBar/book/map'
 
 class BookInfoModal extends Component {
 	handleOk = () => {
-	
+		this.props.form.validateFields(async (err, values) => {
+			if (!err) {
+				const {book_type, ...params} = values
+				const putBookInfoRes = await fetchPutBookInfo({
+					bookId: this.props.bookId,
+					bookTypeId: book_type.key,
+					...params
+				})
+				if (putBookInfoRes.code === 0) {
+					await this.props.getBookList()
+					message.success(putBookInfoRes.msg)
+					this.props.setVisible(false)
+					this.props.form.resetFields()
+				} else {
+					message.error(putBookInfoRes.msg)
+				}
+			}
+		})
 	}
 	
 	handleCancel = () => {
@@ -16,8 +33,8 @@ class BookInfoModal extends Component {
 	}
 	
 	async componentDidMount() {
-		const bookInfoRes = await fetchGetBookInfo({bookId: this.props.bookId})
-		this.props.form.setFieldsValue({...bookInfoRes, book_type: {key: 1, label:'xx'}})
+		const {id, bookTypeId, book_type, ...bookInfoRes} = await fetchGetBookInfo({bookId: this.props.bookId})
+		this.props.form.setFieldsValue({...bookInfoRes, book_type: {key: book_type.id, label: book_type.typeName}})
 	}
 	
 	render() {

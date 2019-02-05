@@ -48,7 +48,7 @@ class BookTypesTable extends Component {
 		}]
 	}
 	
-	configuration = async (record) => {
+	configuration = (record) => {
 		this.props.setModalVisible(record.id, true)
 	}
 	

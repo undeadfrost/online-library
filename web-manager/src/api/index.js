@@ -96,6 +96,9 @@ export const fetchGetBookTypeInfo = (params) => {
 	return http('get', '/admin/book/type', params)
 }
 
+export const fetchPutBookTypeInfo = (params) => {
+	return http('put', '/admin/book/type', params)
+}
 export const fetchGetBooks = (params) => {
 	return http('get', '/admin/books', params)
 }
@@ -110,4 +113,8 @@ export const fetchAddBook = (params) => {
 
 export const fetchGetBookInfo = (params) => {
 	return http('get', '/admin/book/info', params)
+}
+
+export const fetchPutBookInfo = (params) => {
+	return http('put', '/admin/book/info', params)
 }

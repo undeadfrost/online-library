@@ -192,6 +192,10 @@ map.book = {
 			id: 'book_type',
 			options: {
 				rules: [
+					{
+						required: true,
+						message: 'Please input your bookType!',
+					},
 				],
 			},
 			formItemParams: {
