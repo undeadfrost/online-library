@@ -1,10 +1,11 @@
-import {UPDATE_USER, REST_USER} from '../actions/user.actions'
+import {UPDATE_USER, REST_USER, SET_READER_USER_LIST} from '../actions/user.actions'
 
 const initState = {
 	accessToken: '',
 	isLogin: false,
 	userInfo: null,
-	userList: []
+	userList: [],
+	readerUserList: []
 }
 
 export default (state = initState, action) => {
@@ -13,6 +14,8 @@ export default (state = initState, action) => {
 			return {...state, ...action.payload}
 		case REST_USER:
 			return initState
+		case SET_READER_USER_LIST:
+			return {...state, readerUserList: action.payload}
 		default:
 			return state
 	}

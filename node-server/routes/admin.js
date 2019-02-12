@@ -57,5 +57,8 @@ router.post('/book', permissionCheck('sys:book:save'), adminController.addBook()
 router.get('/book/info', permissionCheck('sys:book:info'), adminController.getBookInfo())
 router.put('/book/info', permissionCheck('sys:book:update'), adminController.putBookInfo())
 
+// 借阅用户
+router.get('/reader/users', permissionCheck('sys:readerUser:list'), adminController.getReaderUser())
+
 
 module.exports = router

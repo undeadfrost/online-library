@@ -3,6 +3,7 @@ const userService = require('../service/userService')
 const routeService = require('../service/routeService')
 const roleService = require('../service/roleService')
 const bookService = require('../service/bookService')
+const readerService = require('../service/readerService')
 
 let adminController = {}
 
@@ -298,6 +299,14 @@ adminController.putBookInfo = () => {
 		} else {
 			ctx.body = {code: 1, msg: '参数有误'}
 		}
+	}
+}
+
+adminController.getReaderUser = () => {
+	return async ctx => {
+		let {searchKey} = ctx.query
+		if (!searchKey) searchKey = ''
+		ctx.body = await readerService.getReaderUsers(searchKey)
 	}
 }
 

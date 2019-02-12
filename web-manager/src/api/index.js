@@ -118,3 +118,7 @@ export const fetchGetBookInfo = (params) => {
 export const fetchPutBookInfo = (params) => {
 	return http('put', '/admin/book/info', params)
 }
+
+export const fetchGetReaderUsers = (params) => {
+	return http('get','/admin/reader/users', params)
+}
