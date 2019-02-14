@@ -4,6 +4,7 @@ import {connect} from 'react-redux'
 import ReaderUserTable from './ReaderUserTable'
 import {fetchGetReaderUsers} from '../../../api/index'
 import {setReaderUserList} from '../../../redux/actions/user.actions'
+import ReaderUserActionBar from '../../../components/ActionBar/reader/ReaderUserActionBar'
 
 const mapStateToProps = state => ({
 	readerUserList: state.userData.readerUserList
@@ -13,10 +14,10 @@ const mapDispatchToProps = dispatch => bindActionCreators({setReaderUserList}, d
 
 class UserReader extends Component {
 	async componentDidMount() {
-		await this.getReaderUser()
+		await this.getReaderUsers()
 	}
 	
-	getReaderUser = async () => {
+	getReaderUsers = async () => {
 		const readerUsersRes = await fetchGetReaderUsers()
 		this.props.setReaderUserList(readerUsersRes)
 	}
@@ -24,7 +25,8 @@ class UserReader extends Component {
 	render() {
 		return (
 			<Fragment>
-				<ReaderUserTable/>
+				<ReaderUserActionBar title={'新增用户'} getReaderUsers={this.getReaderUsers}/>
+				<ReaderUserTable getReaderUsers={this.getReaderUsers}/>
 			</Fragment>
 		)
 	}

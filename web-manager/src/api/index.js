@@ -120,5 +120,13 @@ export const fetchPutBookInfo = (params) => {
 }
 
 export const fetchGetReaderUsers = (params) => {
-	return http('get','/admin/reader/users', params)
+	return http('get', '/admin/reader/users', params)
+}
+
+export const fetchAddReaderUser = (params) => {
+	return http('post', '/admin/reader/user', params)
+}
+
+export const fetchDelReaderUser = (params) => {
+	return http('delete', '/admin/reader/user', params)
 }

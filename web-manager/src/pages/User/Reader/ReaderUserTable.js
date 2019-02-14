@@ -1,7 +1,8 @@
 import React, {Component} from 'react'
-import {Table} from 'antd'
+import {Table, Divider, Popconfirm, Icon, message} from 'antd'
 import {connect} from 'react-redux'
 import moment from 'moment'
+import {fetchDelReaderUser} from '../../../api/index'
 
 const rowSelection = {
 	onChange: (selectedRowKeys, selectedRows) => {
@@ -12,6 +13,8 @@ const rowSelection = {
 		name: record.name,
 	}),
 }
+
+const icon = <Icon type="question-circle-o" style={{color: 'red'}}/>
 
 const mapStateToProps = state => ({
 	readerUserList: state.userData.readerUserList
@@ -37,7 +40,28 @@ class ReaderUserTable extends Component {
 			render: (text) => (
 				moment(text).format('YYYY-MM-DD HH:mm:ss')
 			)
+		}, {
+			title: '操作',
+			key: 'action',
+			render: (text, record, index) => (<span>
+					<a>配置</a>
+					<Divider type="vertical"/>
+					<Popconfirm placement="topRight" title="是否删除该用户?" cancelText={'取消'} okText={'确定'}
+											icon={icon} onConfirm={this.delConfirm.bind(this, record.id)}>
+					<a href="#">删除</a>
+					</Popconfirm>
+				</span>)
 		}]
+	}
+	
+	delConfirm = async (userId) => {
+		const delReaderUserRes = await fetchDelReaderUser({userId})
+		if (delReaderUserRes.code === 0) {
+			message.success(delReaderUserRes.msg)
+			await this.props.getReaderUsers()
+		} else {
+			message.error(delReaderUserRes.msg)
+		}
 	}
 	
 	render() {

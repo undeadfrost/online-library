@@ -14,7 +14,7 @@ const SysUser = sequelize.define('sys_user', {
 		allowNull: false
 	},
 	password: {
-		type: Sequelize.STRING(50),
+		type: Sequelize.STRING(255),
 		allowNull: false
 	},
 	mobile: {

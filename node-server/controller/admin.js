@@ -302,11 +302,29 @@ adminController.putBookInfo = () => {
 	}
 }
 
-adminController.getReaderUser = () => {
+adminController.getReaderUsers = () => {
 	return async ctx => {
 		let {searchKey} = ctx.query
 		if (!searchKey) searchKey = ''
 		ctx.body = await readerService.getReaderUsers(searchKey)
+	}
+}
+
+adminController.addReaderUser = () => {
+	return async ctx => {
+		const {realName, idCard, password, confirm, mobile} = ctx.request.body
+		if (realName && idCard && password && confirm && mobile && password === confirm) {
+			ctx.body = await readerService.addReaderUser(realName, idCard, password, mobile)
+		} else {
+			ctx.body = {code: 1, msg: '参数有误'}
+		}
+	}
+}
+
+adminController.delReaderUser = () => {
+	return async ctx => {
+		const {userId} = ctx.query
+		ctx.body = await readerService.delReaderUser(userId)
 	}
 }
 

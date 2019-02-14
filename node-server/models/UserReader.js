@@ -21,7 +21,7 @@ const UserReader = sequelize.define('user_reader', {
     allowNull: false,
   },
 	password: {
-		type: Sequelize.STRING(50),
+		type: Sequelize.STRING(255),
 		allowNull: false
 	},
 },{freezeTableName: true})
