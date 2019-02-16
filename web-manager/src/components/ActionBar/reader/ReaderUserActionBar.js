@@ -20,8 +20,8 @@ class ReaderUserActionBar extends Component {
 		}
 	}
 	
-	onSearch = () => {
-	
+	onSearch = async (value) => {
+		await this.props.getReaderUsers({searchKey: value})
 	}
 	
 	showModal = () => {

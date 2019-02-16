@@ -9,9 +9,23 @@ readerService.getReaderUsers = async (searchKey) => {
 	return await UserReader.findAll({
 		attributes: ['id', 'realName', 'idCard', 'mobile', 'createdAt'],
 		where: {
-			realName: {
-				[Op.like]: `%${searchKey}%`
-			}
+			[Op.or]: [
+				{
+					realName: {
+						[Op.like]: `%${searchKey}%`
+					}
+				},
+				{
+					idCard: {
+						[Op.like]: `%${searchKey}%`
+					}
+				},
+				{
+					mobile: {
+						[Op.like]: `%${searchKey}%`
+					}
+				}
+			]
 		}
 	})
 }

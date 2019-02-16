@@ -17,8 +17,8 @@ class UserReader extends Component {
 		await this.getReaderUsers()
 	}
 	
-	getReaderUsers = async () => {
-		const readerUsersRes = await fetchGetReaderUsers()
+	getReaderUsers = async (params) => {
+		const readerUsersRes = await fetchGetReaderUsers(params)
 		this.props.setReaderUserList(readerUsersRes)
 	}
 	
