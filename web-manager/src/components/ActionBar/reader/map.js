@@ -61,7 +61,7 @@ map.user = {
 				rules: [
 					{
 						required: true,
-						message: 'Please confirm your password!',
+						message: 'Please input your password!',
 					},
 				],
 			},
