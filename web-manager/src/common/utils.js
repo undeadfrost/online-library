@@ -35,3 +35,25 @@ export const formatRoutes = (menus) => {
 	})
 	return topMenus
 }
+
+
+/**
+ * object深拷贝
+ * @param initalObj
+ * @param finalObj
+ */
+export const deepClone = (initalObj, finalObj) => {
+	let obj = finalObj || {};
+	for (let i in initalObj) {
+		let prop = initalObj[i];        // 避免相互引用对象导致死循环，如initalObj.a = initalObj的情况
+		if (prop === obj) {
+			continue;
+		}
+		if (typeof prop === 'object') {
+			obj[i] = (prop.constructor === Array) ? [] : Object.create(prop);
+		} else {
+			obj[i] = prop;
+		}
+	}
+	return obj;
+}
