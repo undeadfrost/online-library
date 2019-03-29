@@ -4,16 +4,18 @@ import styles from '../index.module.less'
 import InputItem from '../../Form/InputItem'
 import {fetchAddReaderUser} from '../../../api/index'
 import Map from './map'
+import _ from 'lodash'
 
 const Search = Input.Search
+let ItemMap = _.cloneDeep(Map.user)
 
 class ReaderUserActionBar extends Component {
 	constructor(props) {
 		super(props)
 		// 增加密码自定义校验
-		Map.user.input[2].options.rules.push({validator: this.validateToNextPassword})
-		Map.user.input[3].options.rules.push({validator: this.compareToFirstPassword})
-		Map.user.input[3].props['onBlur'] = this.handleConfirmBlur
+		ItemMap.input[2].options.rules.push({validator: this.validateToNextPassword})
+		ItemMap.input[3].options.rules.push({validator: this.compareToFirstPassword})
+		ItemMap.input[3].props['onBlur'] = this.handleConfirmBlur
 		this.state = {
 			visible: false,
 			confirmDirty: false,
@@ -72,7 +74,6 @@ class ReaderUserActionBar extends Component {
 	}
 	
 	render() {
-		const ItemMap = Map.user
 		const {form, title} = this.props
 		return (
 			<div className={styles.action_bar}>

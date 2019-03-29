@@ -6,16 +6,18 @@ import InputItem from "../Form/InputItem"
 import SwitchItem from "../Form/SwitchItem"
 import {fetchAddUser, fetchGetRole} from '../../api/index'
 import SelectItem from "../Form/SelectItem"
+import _ from 'lodash'
 
 const Search = Input.Search
+let ItemMap = _.cloneDeep(Map.user)
 
 class UserActionBar extends Component {
 	constructor(props) {
 		super(props)
 		// 增加密码自定义校验
-		Map.user.input[1].options.rules.push({validator: this.validateToNextPassword})
-		Map.user.input[2].options.rules.push({validator: this.compareToFirstPassword})
-		Map.user.input[2].props['onBlur'] = this.handleConfirmBlur
+		ItemMap.input[1].options.rules.push({validator: this.validateToNextPassword})
+		ItemMap.input[2].options.rules.push({validator: this.compareToFirstPassword})
+		ItemMap.input[2].props['onBlur'] = this.handleConfirmBlur
 		this.state = {
 			confirmDirty: false,
 			visible: false,
@@ -89,7 +91,6 @@ class UserActionBar extends Component {
 	
 	render() {
 		const form = this.props.form
-		const ItemMap = Map.user
 		const selectItem = ItemMap.select
 		return (
 			<div className={styles.action_bar}>
