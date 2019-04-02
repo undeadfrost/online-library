@@ -130,3 +130,7 @@ export const fetchAddReaderUser = (params) => {
 export const fetchDelReaderUser = (params) => {
 	return http('delete', '/admin/reader/user', params)
 }
+
+export const fetchGetReaderUserInfo = (params) => {
+	return http('get', '/admin/reader/user', params)
+}

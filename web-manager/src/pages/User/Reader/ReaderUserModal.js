@@ -2,6 +2,7 @@ import React, {Component} from 'react'
 import {Form, Modal} from 'antd'
 import InputItem from '../../../components/Form/InputItem'
 import Map from '../../../components/ActionBar/reader/map'
+import {fetchGetReaderUserInfo} from "../../../api"
 
 class ReaderUserModal extends Component {
 	handleOk = () => {
@@ -9,7 +10,12 @@ class ReaderUserModal extends Component {
 	}
 	
 	handleCancel = () => {
+		this.props.setModalVisible(false)
+	}
 	
+	async componentDidMount() {
+		const readerUserInfo = await fetchGetReaderUserInfo({userId: this.props.userId})
+		this.props.form.setFieldsValue(readerUserInfo)
 	}
 	
 	render() {
@@ -39,4 +45,4 @@ class ReaderUserModal extends Component {
 	}
 }
 
-export default ReaderUserModal
+export default Form.create()(ReaderUserModal)

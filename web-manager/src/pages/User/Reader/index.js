@@ -15,7 +15,8 @@ const mapDispatchToProps = dispatch => bindActionCreators({setReaderUserList}, d
 
 class UserReader extends Component {
 	state = {
-		modalVisible: false
+		modalVisible: false,
+		userId: ''
 	}
 	
 	async componentDidMount() {
@@ -27,8 +28,8 @@ class UserReader extends Component {
 		this.props.setReaderUserList(readerUsersRes)
 	}
 	
-	setModalVisible = (visible) => {
-		this.setState({modalVisible: visible})
+	setModalVisible = (visible, userId) => {
+		this.setState({modalVisible: visible, userId: userId})
 	}
 	
 	render() {
@@ -38,11 +39,15 @@ class UserReader extends Component {
 					title={'新增用户'}
 					getReaderUsers={this.getReaderUsers}/>
 				<ReaderUserTable
-					getReaderUsers={this.getReaderUsers}/>
-				<ReaderUserModal
-					title={'配置用户'}
-					visible={this.state.modalVisible}
+					getReaderUsers={this.getReaderUsers}
 					setModalVisible={this.setModalVisible}/>
+				{
+					this.state.modalVisible && <ReaderUserModal
+						title={'配置用户'}
+						visible={this.state.modalVisible}
+						userId={this.state.userId}
+						setModalVisible={this.setModalVisible}/>
+				}
 			</Fragment>
 		)
 	}

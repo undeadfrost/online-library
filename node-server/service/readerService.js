@@ -61,4 +61,13 @@ readerService.delReaderUser = async (userId) => {
 	}
 }
 
+readerService.getReaderUserInfo = async (userId) => {
+	return await UserReader.findOne({
+		attributes: ['id', 'realName', 'idCard', 'mobile'],
+		where: {
+			id: userId
+		}
+	})
+}
+
 module.exports = readerService

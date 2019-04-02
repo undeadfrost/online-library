@@ -328,4 +328,11 @@ adminController.delReaderUser = () => {
 	}
 }
 
+adminController.getReaderUserInfo = () => {
+	return async ctx => {
+		const {userId} = ctx.query
+		ctx.body = await readerService.getReaderUserInfo(userId)
+	}
+}
+
 module.exports = adminController

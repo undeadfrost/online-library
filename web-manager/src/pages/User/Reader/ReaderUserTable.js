@@ -44,7 +44,9 @@ class ReaderUserTable extends Component {
 			title: '操作',
 			key: 'action',
 			render: (text, record, index) => (<span>
-					<a>配置</a>
+					<a onClick={() => {
+						this.configuration(record)
+					}}>配置</a>
 					<Divider type="vertical"/>
 					<Popconfirm placement="topRight" title="是否删除该用户?" cancelText={'取消'} okText={'确定'}
 											icon={icon} onConfirm={this.delConfirm.bind(this, record.id)}>
@@ -62,6 +64,10 @@ class ReaderUserTable extends Component {
 		} else {
 			message.error(delReaderUserRes.msg)
 		}
+	}
+	
+	configuration = ({id}) => {
+		this.props.setModalVisible(true, id)
 	}
 	
 	render() {
