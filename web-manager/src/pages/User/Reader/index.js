@@ -46,7 +46,8 @@ class UserReader extends Component {
 						title={'配置用户'}
 						visible={this.state.modalVisible}
 						userId={this.state.userId}
-						setModalVisible={this.setModalVisible}/>
+						setModalVisible={this.setModalVisible}
+						getReaderUsers={this.getReaderUsers}/>
 				}
 			</Fragment>
 		)

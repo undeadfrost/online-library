@@ -134,3 +134,7 @@ export const fetchDelReaderUser = (params) => {
 export const fetchGetReaderUserInfo = (params) => {
 	return http('get', '/admin/reader/user', params)
 }
+
+export const fetchPutReaderUserInfo = (params) => {
+	return http('put', '/admin/reader/user', params)
+}

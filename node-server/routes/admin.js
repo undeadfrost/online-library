@@ -62,5 +62,6 @@ router.get('/reader/users', permissionCheck('sys:readerUser:list'), adminControl
 router.post('/reader/user', permissionCheck('sys:readerUser:save'),adminController.addReaderUser())
 router.delete('/reader/user', permissionCheck('sys:readerUser:delete'), adminController.delReaderUser())
 router.get('/reader/user', permissionCheck('sys:readerUser:info'), adminController.getReaderUserInfo())
+router.put('/reader/user', permissionCheck('sys:readerUser:update'), adminController.putReaderUserInfo())
 
 module.exports = router

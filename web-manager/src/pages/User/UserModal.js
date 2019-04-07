@@ -3,12 +3,16 @@ import {Modal, Form, message} from 'antd'
 import InputItem from '../../components/Form/InputItem'
 import SwitchItem from '../../components/Form/SwitchItem'
 import SelectItem from '../../components/Form/SelectItem'
-import ItemMap from '../../components/Form/userMap'
+import Map from '../../components/Form/userMap'
 import {fetchGetRole, fetchGetUserInfo, fetchPutUserInfo} from '../../api/index'
+import _ from 'lodash'
+
+let ItemMap = {}
 
 class UserModal extends Component {
 	constructor(props) {
 		super(props)
+		ItemMap = _.cloneDeep(Map)
 		// 增加密码自定义校验
 		ItemMap.input[1].options.rules.push({validator: this.validateToNextPassword})
 		ItemMap.input[2].options.rules.push({validator: this.compareToFirstPassword})

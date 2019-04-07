@@ -57,7 +57,9 @@ instance.interceptors.response.use(
 			} else if (error.response.status === 400) {
 				console.log('error')
 			} else if (error.response.status === 401) {
-				console.log('error')
+				console.log('无权限')
+				sessionStorage.clear()
+				window.location.href = '/admin/login'
 			}
 		}
 		return Promise.reject(error)

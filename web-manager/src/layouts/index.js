@@ -22,7 +22,7 @@ class Layout extends Component {
 		}
 	}
 	
-	componentDidMount = async () => {
+	componentDidMount = () => {
 		const welcome = {
 			description: "欢迎页",
 			icon: "smile",
@@ -43,11 +43,14 @@ class Layout extends Component {
 			route: "/admin/personal",
 			type: 1
 		}
-		const menusData = await fetchGetRoute()
-		menusData.navList.unshift(welcome)
-		menusData.navList.push(personal)
-		this.props.updateMenu({...menusData})
-		this.setState({isLoading: false})
+		fetchGetRoute().then(menusData => {
+			menusData.navList.unshift(welcome)
+			menusData.navList.push(personal)
+			this.props.updateMenu({...menusData})
+			this.setState({isLoading: false})
+		}).catch(e => {
+			console.log(e)
+		})
 	}
 	
 	render() {

@@ -335,4 +335,15 @@ adminController.getReaderUserInfo = () => {
 	}
 }
 
+adminController.putReaderUserInfo = () => {
+	return async ctx => {
+		const {userId, realName, idCard, password, confirm, mobile} = ctx.request.body
+		if (userId && realName && idCard && mobile && password === confirm) {
+			ctx.body = await readerService.putReaderUser(userId, realName, idCard, password, mobile)
+		} else {
+			ctx.body = {code: 1, msg: '参数有误'}
+		}
+	}
+}
+
 module.exports = adminController

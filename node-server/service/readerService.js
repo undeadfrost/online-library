@@ -70,4 +70,21 @@ readerService.getReaderUserInfo = async (userId) => {
 	})
 }
 
+readerService.putReaderUser = async (userId, realName, idCard, password, mobile) => {
+	const readerUser = await UserReader.findById(userId)
+	let updateParams = {realName, idCard, mobile}
+	// 密码加密
+	if (password) {
+		const salt = bcrypt.genSaltSync(10)
+		const hashPassword = bcrypt.hashSync(password, salt)
+		updateParams.password = hashPassword
+	}
+	try {
+		await readerUser.update(updateParams)
+		return {code: 0, msg: '更新成功'}
+	} catch (e) {
+		return {code: 1, msg: '更新失败'}
+	}
+}
+
 module.exports = readerService
