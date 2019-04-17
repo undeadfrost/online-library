@@ -212,7 +212,7 @@ map.book = {
 		},
 	],
 	upload: {
-		id: 'upload',
+		id: 'cover',
 		options: {
 			valuePropName: 'fileList',
 			getValueFromEvent: function (e) {

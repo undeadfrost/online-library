@@ -38,7 +38,7 @@ class MenuTable extends Component {
 				title: '操作',
 				key: 'action',
 				width: 110,
-				fixed: 'right',
+				// fixed: 'right',
 				render: (text, record, index) => (<span>
 					<a onClick={() => {
 						this.menuRowConfiguration(record)

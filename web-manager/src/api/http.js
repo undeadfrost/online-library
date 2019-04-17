@@ -9,7 +9,7 @@ const instance = axios.create({
 	// 配置api地址
 	baseURL: config.baseUrl,
 	// 请求超时时间
-	timeout: 10000,
+	timeout: 600000,
 	// 设置请求头
 	// headers: {'content-type': 'application/json; charset=UTF-8'},
 	// 设置数据格式化
@@ -70,7 +70,7 @@ instance.interceptors.response.use(
 	}
 )
 
-const http = (method, url, params, config = {headers: {'Content-Type': 'application/json;charset=UTF-8'}}) => {
+const http = (method, url, params, config = {headers: {'Content-Type': 'application/x-www-form-urlencoded'}}) => {
 	if (method === 'get' || method === 'delete') {
 		// 解决IE缓存Get请求问题，增加时间戳
 		params ? params.t = new Date().getTime() : params = {t: new Date().getTime()}

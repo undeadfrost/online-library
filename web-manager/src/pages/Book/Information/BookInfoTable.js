@@ -2,6 +2,7 @@ import React, {Component} from 'react'
 import {Table, Divider, Popconfirm, message} from 'antd'
 import {connect} from 'react-redux'
 import {fetchDelBook} from '../../../api/index'
+import config from "../../../config"
 
 const rowSelection = {
 	onChange: (selectedRowKeys, selectedRows) => {
@@ -27,6 +28,12 @@ class BookInfoTable extends Component {
 			title: '书名',
 			dataIndex: 'bname',
 		}, {
+			title: '封面',
+			dataIndex: 'cover',
+			render: (text) => (
+				<img src={`${config.baseUrl}${text}`} style={{width: 100}} alt="暂无图片"/>
+			)
+		}, {
 			title: '作者',
 			dataIndex: 'author',
 		}, {
@@ -48,7 +55,7 @@ class BookInfoTable extends Component {
 			title: '操作',
 			key: 'action',
 			width: 110,
-			fixed: 'right',
+			// fixed: 'right',
 			render: (text, record, index) => (<span>
 					<a onClick={() => {
 						this.configuration(record)

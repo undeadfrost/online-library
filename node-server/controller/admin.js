@@ -275,9 +275,10 @@ adminController.delBook = () => {
 
 adminController.addBook = () => {
 	return async ctx => {
-		const {number, bname, author, publishing, timeLimit, book_type, cover} = ctx.request.body
+		const {number, bname, author, publishing, timeLimit, bookTypeId} = ctx.request.body
+		const {cover} = ctx.request.files
 		if (number && bname && author && publishing && timeLimit) {
-			ctx.body = await bookService.addBook(number, bname, author, publishing, timeLimit, book_type, cover)
+			ctx.body = await bookService.addBook(number, bname, author, publishing, timeLimit, bookTypeId, cover)
 		} else {
 			ctx.body = {code: 1, msg: '参数有误'}
 		}

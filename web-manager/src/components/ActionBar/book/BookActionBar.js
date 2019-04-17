@@ -6,6 +6,7 @@ import NumberItem from '../../Form/NumberItem'
 import SelectItem from '../../Form/SelectItem'
 import ImageUploadItem from '../../Form/ImageUploadItem'
 import {fetchAddBook} from '../../../api/index'
+import {objectToFormData} from '../../../common/utils'
 import Map from './map'
 
 const Search = Input.Search
@@ -13,7 +14,6 @@ const Search = Input.Search
 class BookActionBar extends Component {
 	state = {
 		visible: false,
-		imageUrl: ''
 	}
 	
 	onSearch = async (value) => {
@@ -27,21 +27,22 @@ class BookActionBar extends Component {
 	handleOk = () => {
 		this.props.form.validateFields(async (err, values) => {
 			if (!err) {
-				console.log(values)
-				// const addBookRes = await fetchAddBook(values)
-				// if (addBookRes.code === 0) {
-				// 	this.setState({visible: false})
-				// 	this.props.form.resetFields()
-				// 	await this.props.getBooks()
-				// 	message.success(addBookRes.msg)
-				// } else {
-				// 	message.error(addBookRes.msg)
-				// }
+				values.bookTypeId = values.book_type.key
+				delete values.book_type
+				const addBookRes = await fetchAddBook(objectToFormData(values))
+				if (addBookRes.code === 0) {
+					this.setState({visible: false})
+					this.props.form.resetFields()
+					await this.props.getBooks()
+					message.success(addBookRes.msg)
+				} else {
+					message.error(addBookRes.msg)
+				}
 			}
 		})
 	}
 	handleCancel = () => {
-		// this.setState({visible: false, imageUrl: ''})
+		this.setState({visible: false})
 		this.props.form.resetFields()
 	}
 	

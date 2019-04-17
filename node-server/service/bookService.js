@@ -1,6 +1,8 @@
 const BookType = require('../models/BookType')
 const Books = require('../models/Books')
 const Sequelize = require('sequelize')
+const fs = require('fs')
+const path = require('path')
 
 const Op = Sequelize.Op
 let bookService = {}
@@ -99,12 +101,17 @@ bookService.delBook = async (bookId) => {
 	}
 }
 
-bookService.addBook = async (number, bname, author, publishing, timeLimit, book_type, cover) => {
-	let bookTypeId = null
-	if (book_type) {
-		bookTypeId = book_type.key
-	}
+bookService.addBook = async (number, bname, author, publishing, timeLimit, bookTypeId, cover) => {
 	try {
+		// 创建可读流
+		const readStream = fs.createReadStream(cover.path);
+		const fileFormat = cover.name.split('.')
+		const fileName = bname + Date.now() + '.' + fileFormat[fileFormat.length - 1]
+		let filePath = path.join(__dirname, `../public/uploads/bookCovers/${fileName}`);
+		// 创建可写流
+		const writeStream = fs.createWriteStream(filePath);
+		// 可读流通过管道写入可写流
+		readStream.pipe(writeStream);
 		await Books.create({
 			number: number,
 			bname: bname,
@@ -112,7 +119,7 @@ bookService.addBook = async (number, bname, author, publishing, timeLimit, book_
 			publishing: publishing,
 			timeLimit: timeLimit,
 			bookTypeId: bookTypeId,
-			cover: cover
+			cover: `/uploads/bookCovers/${fileName}`
 		})
 		return {code: 0, msg: '新增成功'}
 	} catch (e) {
