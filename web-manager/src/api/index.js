@@ -1,5 +1,12 @@
 import http from './http'
 
+const config = {
+	formData: {
+		headers: {'Content-Type': 'multipart/form-data'}
+	},
+}
+
+
 export const fetchLogin = (params) => {
 	return http('post', '/admin/login', params)
 }

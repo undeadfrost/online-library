@@ -24,6 +24,10 @@ instance.interceptors.request.use(
 	config => {
 		// 在此添加发起请求前的信息
 		config.headers.Authorization = 'Bearer ' + store.getState().userData.accessToken
+		// 如果修改请求头，则不格式化请求数据
+		if (config.headers['Content-Type'] !== 'application/x-www-form-urlencoded') {
+			config.transformRequest = data => data
+		}
 		return config
 	},
 	error => {
@@ -66,7 +70,7 @@ instance.interceptors.response.use(
 	}
 )
 
-const http = (method, url, params, config = {'Content-Type': 'application/x-www-form-urlencoded'}) => {
+const http = (method, url, params, config = {headers: {'Content-Type': 'application/json;charset=UTF-8'}}) => {
 	if (method === 'get' || method === 'delete') {
 		// 解决IE缓存Get请求问题，增加时间戳
 		params ? params.t = new Date().getTime() : params = {t: new Date().getTime()}
