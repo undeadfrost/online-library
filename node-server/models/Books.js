@@ -27,8 +27,10 @@ const Books = sequelize.define('books', {
 	timeLimit: {
 		type: Sequelize.INTEGER(10),
 		allowNull: false
+	},
+	cover: {
+		type: Sequelize.STRING(255),
 	}
-	
 }, {freezeTableName: true, timestamps: false})
 
 module.exports = Books;

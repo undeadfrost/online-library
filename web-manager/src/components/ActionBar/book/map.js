@@ -210,7 +210,30 @@ map.book = {
 				},
 			},
 		},
-	]
+	],
+	upload: {
+		id: 'upload',
+		options: {
+			valuePropName: 'fileList',
+			getValueFromEvent: function (e) {
+				if (Array.isArray(e)) {
+					return e[e.length - 1]
+				}
+				return e && e['file']
+			}
+		},
+		formItemParams: {
+			label: '图书封面',
+			labelCol: {
+				xs: {span: 24},
+				sm: {span: 4},
+			},
+			wrapperCol: {
+				xs: {span: 24},
+				sm: {span: 18},
+			},
+		},
+	}
 }
 
 export default map

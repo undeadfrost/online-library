@@ -99,7 +99,7 @@ bookService.delBook = async (bookId) => {
 	}
 }
 
-bookService.addBook = async (number, bname, author, publishing, timeLimit, book_type) => {
+bookService.addBook = async (number, bname, author, publishing, timeLimit, book_type, cover) => {
 	let bookTypeId = null
 	if (book_type) {
 		bookTypeId = book_type.key
@@ -111,7 +111,8 @@ bookService.addBook = async (number, bname, author, publishing, timeLimit, book_
 			author: author,
 			publishing: publishing,
 			timeLimit: timeLimit,
-			bookTypeId: bookTypeId
+			bookTypeId: bookTypeId,
+			cover: cover
 		})
 		return {code: 0, msg: '新增成功'}
 	} catch (e) {

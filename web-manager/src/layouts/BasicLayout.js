@@ -49,7 +49,7 @@ class BasicLayout extends Component {
 			const submenus = navsData[i].submenus
 			if (submenus) {
 				for (let j = 0; j < submenus.length; j++) {
-					if (submenus[j].route === pathname) {
+					if (pathname.includes(submenus[j].route)) {
 						openKeys.push(navsData[i].id.toString())
 						selectedKeys.push(submenus[j].id.toString())
 						break

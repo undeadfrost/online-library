@@ -22,7 +22,7 @@ class UserActionBar extends Component {
 			confirmDirty: false,
 			visible: false,
 			confirmLoading: false,
-			roles: []
+			roles: [],
 		}
 	}
 	
