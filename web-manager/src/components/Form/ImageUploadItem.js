@@ -1,5 +1,6 @@
 import React, {Component} from 'react'
 import {Form, Upload, Icon} from "antd"
+import config from '../../config'
 
 const FormItem = Form.Item
 
@@ -14,11 +15,15 @@ class ImageUploadItem extends Component {
 		imageUrl: '',
 	}
 	
+	
 	componentWillReceiveProps(nextProps) {
+		// imageUrl自动设置
 		const {id, form} = nextProps
 		const {getFieldValue} = form
-		if (!getFieldValue(id) && this.state.imageUrl != '') {
+		if (!getFieldValue(id) && this.state.imageUrl != '') { // 表单中有数据，并且图片存在链接的情况内部更新图片链接
 			this.setState({imageUrl: ''})
+		} else if (getFieldValue(id) && this.state.imageUrl == '') { // 表单中有数据且图片不存在链接则获取表单中的链接
+			this.setState({imageUrl: `${config.baseUrl}${getFieldValue(id)}`})
 		}
 	}
 	

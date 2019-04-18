@@ -138,17 +138,32 @@ bookService.getBookInfo = async (bookId) => {
 	})
 }
 
-bookService.putBookInfo = async (bookId, number, bname, author, publishing, timeLimit, bookTypeId) => {
+bookService.putBookInfo = async (bookId, number, bname, author, publishing, timeLimit, bookTypeId, cover) => {
 	const book = await Books.findById(bookId)
+	let fields = ['number', 'bname', 'author', 'publishing', 'timeLimit', 'bookTypeId']
 	try {
+		let fileName = ''
+		if (cover.path) {
+			// 创建可读流
+			const readStream = fs.createReadStream(cover.path);
+			const fileFormat = cover.name.split('.')
+			fileName = bname + Date.now() + '.' + fileFormat[fileFormat.length - 1]
+			let filePath = path.join(__dirname, `../public/uploads/bookCovers/${fileName}`);
+			// 创建可写流
+			const writeStream = fs.createWriteStream(filePath);
+			// 可读流通过管道写入可写流
+			readStream.pipe(writeStream);
+			fields = fields.concat(['cover'])
+		}
 		await book.update({
 			number: number,
 			bname: bname,
 			author: author,
 			publishing: publishing,
 			timeLimit: timeLimit,
-			bookTypeId: bookTypeId
-		})
+			bookTypeId: bookTypeId,
+			cover: `/uploads/bookCovers/${fileName}`
+		}, {fields: fields})
 		return {code: 0, msg: '更新成功'}
 	} catch (e) {
 		return {code: 1, msg: '更新失败'}

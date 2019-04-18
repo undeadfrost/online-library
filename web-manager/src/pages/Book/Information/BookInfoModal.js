@@ -4,6 +4,8 @@ import {fetchGetBookInfo, fetchPutBookInfo} from '../../../api/index'
 import InputItem from '../../../components/Form/InputItem'
 import SelectItem from '../../../components/Form/SelectItem'
 import NumberItem from '../../../components/Form/NumberItem'
+import ImageUploadItem from '../../../components/Form/ImageUploadItem'
+import {objectToFormData} from '../../../common/utils'
 import Map from '../../../components/ActionBar/book/map'
 
 class BookInfoModal extends Component {
@@ -11,11 +13,11 @@ class BookInfoModal extends Component {
 		this.props.form.validateFields(async (err, values) => {
 			if (!err) {
 				const {book_type, ...params} = values
-				const putBookInfoRes = await fetchPutBookInfo({
+				const putBookInfoRes = await fetchPutBookInfo(objectToFormData({
 					bookId: this.props.bookId,
 					bookTypeId: book_type.key,
 					...params
-				})
+				}))
 				if (putBookInfoRes.code === 0) {
 					await this.props.getBookList()
 					message.success(putBookInfoRes.msg)
@@ -78,6 +80,12 @@ class BookInfoModal extends Component {
 								selectData={this.props.bookTypes}/>
 						))
 					}
+					<ImageUploadItem
+						key={ItemMap.upload.id}
+						id={ItemMap.upload.id}
+						form={form}
+						options={ItemMap.upload.options}
+						formItemParams={ItemMap.upload.formItemParams}/>
 				</Form>
 			</Modal>
 		)

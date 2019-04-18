@@ -101,8 +101,7 @@ class BookActionBar extends Component {
 							id={ItemMap.upload.id}
 							form={form}
 							options={ItemMap.upload.options}
-							formItemParams={ItemMap.upload.formItemParams}
-							imageUrl={this.state.imageUrl}/>
+							formItemParams={ItemMap.upload.formItemParams}/>
 					</Form>
 				</Modal>
 			</div>

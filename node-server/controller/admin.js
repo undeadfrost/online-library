@@ -295,8 +295,9 @@ adminController.getBookInfo = () => {
 adminController.putBookInfo = () => {
 	return async ctx => {
 		const {bookId, number, bname, author, publishing, timeLimit, bookTypeId} = ctx.request.body
+		const {cover} = ctx.request.files
 		if (bookId && number && bname && author && publishing && timeLimit) {
-			ctx.body = await bookService.putBookInfo(bookId, number, bname, author, publishing, timeLimit, bookTypeId)
+			ctx.body = await bookService.putBookInfo(bookId, number, bname, author, publishing, timeLimit, bookTypeId, cover)
 		} else {
 			ctx.body = {code: 1, msg: '参数有误'}
 		}
