@@ -3,7 +3,7 @@ const config = {
 	port: 8000,
 	// 数据库配置
 	db: {
-		database: 'koa2manager',
+		database: 'online-library',
 		username: 'root',
 		password: 'libo1121X',
 		host: 'localhost',

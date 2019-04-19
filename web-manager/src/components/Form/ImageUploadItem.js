@@ -20,9 +20,9 @@ class ImageUploadItem extends Component {
 		// imageUrl自动设置
 		const {id, form} = nextProps
 		const {getFieldValue} = form
-		if (!getFieldValue(id) && this.state.imageUrl != '') { // 表单中有数据，并且图片存在链接的情况内部更新图片链接
+		if (!getFieldValue(id) && this.state.imageUrl !== '') { // 表单中有数据，并且图片存在链接的情况内部更新图片链接
 			this.setState({imageUrl: ''})
-		} else if (getFieldValue(id) && this.state.imageUrl == '') { // 表单中有数据且图片不存在链接则获取表单中的链接
+		} else if (getFieldValue(id) && this.state.imageUrl === '') { // 表单中有数据且图片不存在链接则获取表单中的链接
 			this.setState({imageUrl: `${config.baseUrl}${getFieldValue(id)}`})
 		}
 	}
