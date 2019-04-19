@@ -1,18 +1,11 @@
 const sequelize = require('./mysql')
 const fs = require('fs')
 const path = require('path')
-// const SysMenu = require('../models/SysMenu')
-// const SysRole = require('../models/SysRole')
-// const SysUser = require('../models/SysUser')
-// const UserReader = require('../models/UserReader')
-// const BookBorrow = require('../models/BookBorrow')
-// const Books = require('../models/Books')
-// const BookType = require('../models/BookType')
 
 /**
  * 自动导入
- * @param {*} app 
- * @param {*} path 
+ * @param {*} app
+ * @param {*} path
  */
 const autoImport = (path) => {
 	let files = fs.readdirSync(path)

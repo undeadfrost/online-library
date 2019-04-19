@@ -1,6 +1,6 @@
 const config = {
 	// 项目端口
-	port: 8000,
+	port: 8002,
 	// 数据库配置
 	db: {
 		database: 'online-library',

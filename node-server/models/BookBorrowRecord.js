@@ -3,7 +3,7 @@ const Sequelize = sequelize.Sequelize;
 const Books = require('./Books');
 const UserReader = require('./UserReader');
 
-const BookBorrow = sequelize.define('book_borrow', {
+const BookBorrowRecord = sequelize.define('book_borrow_record', {
 	id: {
 		type: Sequelize.INTEGER(11),
 		allowNull: false,
@@ -26,16 +26,14 @@ const BookBorrow = sequelize.define('book_borrow', {
 			key: 'id'
 		}
 	},
-	status: {
-		type: Sequelize.INTEGER,
-		defaultValue: 1
-	},
 	borrow_time: {
+		allowNull: false,
 		type: Sequelize.DATE,
 	},
 	return_time: {
+		allowNull: false,
 		type: Sequelize.DATE,
 	}
-}, {freezeTableName: true, timestamps: false})
+})
 
-module.exports = BookBorrow;
+module.exports = BookBorrowRecord

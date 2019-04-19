@@ -348,4 +348,9 @@ adminController.putReaderUserInfo = () => {
 	}
 }
 
+adminController.getBookBorrows = () => {
+	return async ctx => {
+		const {} = ctx.query
+	}
+}
 module.exports = adminController

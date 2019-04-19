@@ -64,4 +64,7 @@ router.delete('/reader/user', permissionCheck('sys:readerUser:delete'), adminCon
 router.get('/reader/user', permissionCheck('sys:readerUser:info'), adminController.getReaderUserInfo())
 router.put('/reader/user', permissionCheck('sys:readerUser:update'), adminController.putReaderUserInfo())
 
+// 借阅管理
+router.get('/book/borrows', permissionCheck('sys:bookBorrow:list'), adminController.getBookBorrows())
+
 module.exports = router
