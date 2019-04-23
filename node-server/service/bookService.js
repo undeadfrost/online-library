@@ -1,5 +1,6 @@
 const BookType = require('../models/BookType')
 const Books = require('../models/Books')
+const BookBorrow = require('../models/BookBorrow')
 const Sequelize = require('sequelize')
 const fs = require('fs')
 const path = require('path')
@@ -170,4 +171,15 @@ bookService.putBookInfo = async (bookId, number, bname, author, publishing, time
 	}
 }
 
+
+bookService.getBookBorrows = async (number, bname, keyword) => {
+	return await BookBorrow.findAll({
+		include: [{
+			model: Books,
+			// where: {
+			// 	number: number
+			// }
+		}],
+	})
+}
 module.exports = bookService

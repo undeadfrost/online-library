@@ -350,7 +350,8 @@ adminController.putReaderUserInfo = () => {
 
 adminController.getBookBorrows = () => {
 	return async ctx => {
-		const {} = ctx.query
+		const {number, bname, keyword} = ctx.query
+		ctx.body = await bookService.getBookBorrows(number, bname, keyword)
 	}
 }
 module.exports = adminController
