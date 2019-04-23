@@ -10,7 +10,7 @@ const BookBorrowRecord = sequelize.define('book_borrow_record', {
 		primaryKey: true,
 		autoIncrement: true
 	},
-	book_id: {
+	bookId: {
 		type: Sequelize.INTEGER,
 		allowNull: false,
 		references: {
@@ -18,7 +18,7 @@ const BookBorrowRecord = sequelize.define('book_borrow_record', {
 			key: 'id'
 		}
 	},
-	user_id: {
+	userId: {
 		type: Sequelize.INTEGER,
 		allowNull: false,
 		references: {

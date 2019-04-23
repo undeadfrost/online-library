@@ -10,7 +10,7 @@ const BookBorrow = sequelize.define('book_borrow', {
 		primaryKey: true,
 		autoIncrement: true
 	},
-	book_id: {
+	bookId: {
 		type: Sequelize.INTEGER,
 		allowNull: false,
 		references: {
@@ -18,7 +18,7 @@ const BookBorrow = sequelize.define('book_borrow', {
 			key: 'id'
 		}
 	},
-	user_id: {
+	userId: {
 		type: Sequelize.INTEGER,
 		allowNull: false,
 		references: {
@@ -39,3 +39,6 @@ const BookBorrow = sequelize.define('book_borrow', {
 }, {freezeTableName: true, timestamps: false})
 
 module.exports = BookBorrow;
+
+BookBorrow.belongsTo(Books)
+BookBorrow.belongsTo(UserReader,{foreignKey: 'userId'})

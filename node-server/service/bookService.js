@@ -1,6 +1,7 @@
 const BookType = require('../models/BookType')
 const Books = require('../models/Books')
 const BookBorrow = require('../models/BookBorrow')
+const UserReader = require('../models/UserReader')
 const Sequelize = require('sequelize')
 const fs = require('fs')
 const path = require('path')
@@ -25,18 +26,18 @@ bookService.addBookTypes = async (typeName, detail) => {
 			typeName: typeName,
 			detail: detail
 		})
-		return {code: 0, msg: '新增成功'}
+		return { code: 0, msg: '新增成功' }
 	} catch (e) {
-		return {code: 1, msg: '新增失败'}
+		return { code: 1, msg: '新增失败' }
 	}
 }
 
 bookService.delBookType = async (bookTypeId) => {
 	try {
-		await BookType.destroy({where: {id: bookTypeId}})
-		return {code: 0, msg: '删除成功'}
+		await BookType.destroy({ where: { id: bookTypeId } })
+		return { code: 0, msg: '删除成功' }
 	} catch (e) {
-		return {code: 1, msg: '删除错误'}
+		return { code: 1, msg: '删除错误' }
 	}
 }
 
@@ -51,9 +52,9 @@ bookService.putBookTypeInfo = async (bookTypeId, typeName, detail) => {
 			typeName: typeName,
 			detail: detail
 		})
-		return {code: 0, msg: '更新成功'}
+		return { code: 0, msg: '更新成功' }
 	} catch (e) {
-		return {code: 1, msg: '更新失败'}
+		return { code: 1, msg: '更新失败' }
 	}
 }
 
@@ -87,6 +88,11 @@ bookService.getBooks = async (searchKey) => {
 						[Op.like]: `%${searchKey}%`
 					}
 				},
+				{
+					'$book_type.typeName$': {
+						[Op.like]: `%${searchKey}%`
+					}
+				}
 			]
 		},
 	})
@@ -95,10 +101,10 @@ bookService.getBooks = async (searchKey) => {
 
 bookService.delBook = async (bookId) => {
 	try {
-		Books.destroy({where: {id: bookId}})
-		return {code: 0, msg: '删除成功'}
+		Books.destroy({ where: { id: bookId } })
+		return { code: 0, msg: '删除成功' }
 	} catch (e) {
-		return {code: 1, msg: '删除失败'}
+		return { code: 1, msg: '删除失败' }
 	}
 }
 
@@ -122,9 +128,9 @@ bookService.addBook = async (number, bname, author, publishing, timeLimit, bookT
 			bookTypeId: bookTypeId,
 			cover: `/uploads/bookCovers/${fileName}`
 		})
-		return {code: 0, msg: '新增成功'}
+		return { code: 0, msg: '新增成功' }
 	} catch (e) {
-		return {code: 1, msg: '新增失败'}
+		return { code: 1, msg: '新增失败' }
 	}
 }
 
@@ -135,7 +141,7 @@ bookService.getBookInfo = async (bookId) => {
 				model: BookType,
 			}
 		],
-		where: {id: bookId}
+		where: { id: bookId }
 	})
 }
 
@@ -164,22 +170,40 @@ bookService.putBookInfo = async (bookId, number, bname, author, publishing, time
 			timeLimit: timeLimit,
 			bookTypeId: bookTypeId,
 			cover: `/uploads/bookCovers/${fileName}`
-		}, {fields: fields})
-		return {code: 0, msg: '更新成功'}
+		}, { fields: fields })
+		return { code: 0, msg: '更新成功' }
 	} catch (e) {
-		return {code: 1, msg: '更新失败'}
+		return { code: 1, msg: '更新失败' }
 	}
 }
 
 
-bookService.getBookBorrows = async (number, bname, keyword) => {
+bookService.getBookBorrows = async (number, bname, realName, keyword) => {
+	let where = {}
+	if (number) {
+		where['$book.number$'] = number
+	}
 	return await BookBorrow.findAll({
 		include: [{
 			model: Books,
-			// where: {
-			// 	number: number
-			// }
+		}, {
+			model: UserReader,
 		}],
+		where: {
+			...where,
+			'$book.bname$': {
+				[Op.like]: `%${bname}%`
+			},
+			'$book.author$': {
+				[Op.like]: `%${keyword}%`
+			},
+			'$book.publishing$': {
+				[Op.like]: `%${keyword}%`
+			},
+			'$user_reader.realName$': {
+				[Op.like]: `%${realName}%`
+			}
+		}
 	})
 }
 module.exports = bookService

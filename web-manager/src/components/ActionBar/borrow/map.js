@@ -29,6 +29,19 @@ map.borrow = {
 			}
 		},
 		{
+			id: 'realName',
+			options: {
+				initialValue: "",
+			},
+			formItemParams: {
+				label: '借阅人',
+			},
+			props: {
+				type: 'text',
+				placeholder: '借阅人',
+			}
+		},
+		{
 			id: 'keyword',
 			options: {
 				initialValue: "",
