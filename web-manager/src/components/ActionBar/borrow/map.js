@@ -55,6 +55,62 @@ map.borrow = {
 			}
 		},
 	],
+	form: [
+		{
+			id: 'number',
+			options: {
+				rules: [
+					{
+						required: true,
+						message: 'Please input your number!',
+					},
+				],
+				initialValue: "",
+			},
+			formItemParams: {
+				label: '编号',
+				labelCol: {
+					xs: {span: 24},
+					sm: {span: 4},
+				},
+				wrapperCol: {
+					xs: {span: 24},
+					sm: {span: 18},
+				},
+			},
+			props: {
+				type: 'text',
+				placeholder: '编号',
+			}
+		},
+		{
+			id: 'idCard',
+			options: {
+				rules: [
+					{
+						required: true,
+						message: 'Please input your idCard!',
+					},
+				],
+				initialValue: "",
+			},
+			formItemParams: {
+				label: '身份证',
+				labelCol: {
+					xs: {span: 24},
+					sm: {span: 4},
+				},
+				wrapperCol: {
+					xs: {span: 24},
+					sm: {span: 18},
+				},
+			},
+			props: {
+				type: 'text',
+				placeholder: '身份证',
+			}
+		},
+	]
 }
 
 export default map

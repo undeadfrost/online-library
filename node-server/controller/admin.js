@@ -350,8 +350,19 @@ adminController.putReaderUserInfo = () => {
 
 adminController.getBookBorrows = () => {
 	return async ctx => {
-		const {number, bname,realName, keyword} = ctx.query
+		const {number, bname, realName, keyword} = ctx.query
 		ctx.body = await bookService.getBookBorrows(number, bname, realName, keyword)
+	}
+}
+
+adminController.addBookBorrow = () => {
+	return async ctx => {
+		const {number, idCard} = ctx.request.body
+		if (number && idCard) {
+			ctx.body = await bookService.addBookBorrow(number, idCard)
+		} else {
+			ctx.body = {code: 1, msg: '参数有误'}
+		}
 	}
 }
 module.exports = adminController

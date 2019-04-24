@@ -12,7 +12,7 @@ class BookBorrow extends Component {
 	render() {
 		return (
 			<div>
-				<BorrowActionBar getBookBorrows={this.getBookBorrows}/>
+				<BorrowActionBar title={"图书借阅"} getBookBorrows={this.getBookBorrows}/>
 			</div>
 		)
 	}
