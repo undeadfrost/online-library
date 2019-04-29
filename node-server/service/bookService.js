@@ -26,18 +26,18 @@ bookService.addBookTypes = async (typeName, detail) => {
 			typeName: typeName,
 			detail: detail
 		})
-		return {code: 0, msg: '新增成功'}
+		return { code: 0, msg: '新增成功' }
 	} catch (e) {
-		return {code: 1, msg: '新增失败'}
+		return { code: 1, msg: '新增失败' }
 	}
 }
 
 bookService.delBookType = async (bookTypeId) => {
 	try {
-		await BookType.destroy({where: {id: bookTypeId}})
-		return {code: 0, msg: '删除成功'}
+		await BookType.destroy({ where: { id: bookTypeId } })
+		return { code: 0, msg: '删除成功' }
 	} catch (e) {
-		return {code: 1, msg: '删除错误'}
+		return { code: 1, msg: '删除错误' }
 	}
 }
 
@@ -52,9 +52,9 @@ bookService.putBookTypeInfo = async (bookTypeId, typeName, detail) => {
 			typeName: typeName,
 			detail: detail
 		})
-		return {code: 0, msg: '更新成功'}
+		return { code: 0, msg: '更新成功' }
 	} catch (e) {
-		return {code: 1, msg: '更新失败'}
+		return { code: 1, msg: '更新失败' }
 	}
 }
 
@@ -101,10 +101,10 @@ bookService.getBooks = async (searchKey) => {
 
 bookService.delBook = async (bookId) => {
 	try {
-		Books.destroy({where: {id: bookId}})
-		return {code: 0, msg: '删除成功'}
+		Books.destroy({ where: { id: bookId } })
+		return { code: 0, msg: '删除成功' }
 	} catch (e) {
-		return {code: 1, msg: '删除失败'}
+		return { code: 1, msg: '删除失败' }
 	}
 }
 
@@ -128,9 +128,9 @@ bookService.addBook = async (number, bname, author, publishing, timeLimit, bookT
 			bookTypeId: bookTypeId,
 			cover: `/uploads/bookCovers/${fileName}`
 		})
-		return {code: 0, msg: '新增成功'}
+		return { code: 0, msg: '新增成功' }
 	} catch (e) {
-		return {code: 1, msg: '新增失败'}
+		return { code: 1, msg: '新增失败' }
 	}
 }
 
@@ -141,7 +141,7 @@ bookService.getBookInfo = async (bookId) => {
 				model: BookType,
 			}
 		],
-		where: {id: bookId}
+		where: { id: bookId }
 	})
 }
 
@@ -170,15 +170,15 @@ bookService.putBookInfo = async (bookId, number, bname, author, publishing, time
 			timeLimit: timeLimit,
 			bookTypeId: bookTypeId,
 			cover: `/uploads/bookCovers/${fileName}`
-		}, {fields: fields})
-		return {code: 0, msg: '更新成功'}
+		}, { fields: fields })
+		return { code: 0, msg: '更新成功' }
 	} catch (e) {
-		return {code: 1, msg: '更新失败'}
+		return { code: 1, msg: '更新失败' }
 	}
 }
 
 
-bookService.getBookBorrows = async (number, bname, realName, keyword) => {
+bookService.getBookBorrows = async (number, bname = "", realName = "", keyword = "") => {
 	let where = {}
 	if (number) {
 		where['$book.number$'] = number
@@ -186,74 +186,42 @@ bookService.getBookBorrows = async (number, bname, realName, keyword) => {
 	return await BookBorrow.findAll({
 		include: [{
 			model: Books,
+			attributes: ['id', 'number', 'bname', 'author', 'publishing']
 		}, {
 			model: UserReader,
+			attributes: ['id', 'realName', 'idCard', 'mobile']
 		}],
 		where: {
 			...where,
 			'$book.bname$': {
 				[Op.like]: `%${bname}%`
 			},
-			'$book.author$': {
-				[Op.like]: `%${keyword}%`
-			},
-			'$book.publishing$': {
-				[Op.like]: `%${keyword}%`
-			},
 			'$user_reader.realName$': {
 				[Op.like]: `%${realName}%`
-			}
+			},
+			[Op.or]: [
+				{
+					'$book.author$': {
+						[Op.like]: `%${keyword}%`
+					},
+				},
+				{
+					'$book.publishing$': {
+						[Op.like]: `%${keyword}%`
+					},
+				},
+				{
+					'$user_reader.idCard$': {
+						[Op.like]: `%${keyword}%`
+					},
+				},
+				{
+					'$user_reader.mobile$': {
+						[Op.like]: `%${keyword}%`
+					}
+				}
+			]
 		}
 	})
 }
-
-bookService.addBookBorrow = async (number, idCard) => {
-	const [book, userReader, bookBorrow] = await Promise.all([
-		// 获取图书
-		Books.findOne({
-			where: {
-				number: number
-			}
-		}),
-		// 获取用户
-		UserReader.findOne({
-			where: {
-				idCard: idCard
-			}
-		}),
-		// 查看是否已被预订
-		BookBorrow.findOne({
-			include: [{
-				model: Books,
-			}, {
-				model: UserReader,
-			}],
-			where: {
-				'$book.number$': number,
-				status: 0,
-			}
-		})
-	])
-	if (!book) {
-		return {code: 1, msg: '图书编号不存在！'}
-	}
-	if (!userReader) {
-		return {code: 1, msg: '借用用户不存在！'}
-	}
-	if (bookBorrow) {
-		return {code: 1, msg: '图书已被预定！'}
-	}
-	try {
-		await BookBorrow.create({
-			bookId: book.id,
-			userId: userReader.id,
-			status: 0,
-			borrow_time: new Date()
-		})
-	} catch (e) {
-		return {code: 1, msg: '系统错误！'}
-	}
-	return {code: 0, msg: '借阅成功！'}
-}
-
 module.exports = bookService

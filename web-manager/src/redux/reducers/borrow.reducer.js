@@ -1,13 +1,13 @@
-import {UPDATE_BORROWS} from '../actions/borrow.actions'
+import { UPDATE_BORROWS } from '../actions/borrow.actions'
 
 const initState = {
-	borrowSearch: []
+	borrowList: []
 }
 
 export default (state = initState, action) => {
 	switch (action.type) {
 		case UPDATE_BORROWS:
-			return {...state, ...action.payload}
+			return { ...state, borrowList: action.payload.borrowList }
 		default:
 			return state
 	}
