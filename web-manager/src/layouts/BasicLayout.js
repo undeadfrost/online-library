@@ -64,7 +64,6 @@ class BasicLayout extends Component {
 	}
 	
 	onClick = ({item, key, keyPath}) => {
-		console.log(keyPath)
 		this.setState({selectedKeys: [key]})
 	}
 	

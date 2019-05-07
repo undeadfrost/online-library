@@ -42,12 +42,12 @@ bookService.delBookType = async (bookTypeId) => {
 }
 
 bookService.getBookTypeInfo = async (bookTypeId) => {
-	return await BookType.findById(bookTypeId)
+	return await BookType.findByPk(bookTypeId)
 }
 
 bookService.putBookTypeInfo = async (bookTypeId, typeName, detail) => {
 	try {
-		const bookType = await BookType.findById(bookTypeId)
+		const bookType = await BookType.findByPk(bookTypeId)
 		await bookType.update({
 			typeName: typeName,
 			detail: detail
@@ -146,7 +146,7 @@ bookService.getBookInfo = async (bookId) => {
 }
 
 bookService.putBookInfo = async (bookId, number, bname, author, publishing, timeLimit, bookTypeId, cover) => {
-	const book = await Books.findById(bookId)
+	const book = await Books.findByPk(bookId)
 	let fields = ['number', 'bname', 'author', 'publishing', 'timeLimit', 'bookTypeId']
 	try {
 		let fileName = ''

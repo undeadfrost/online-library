@@ -71,7 +71,7 @@ readerService.getReaderUserInfo = async (userId) => {
 }
 
 readerService.putReaderUser = async (userId, realName, idCard, password, mobile) => {
-	const readerUser = await UserReader.findById(userId)
+	const readerUser = await UserReader.findByPk(userId)
 	let updateParams = {realName, idCard, mobile}
 	// 密码加密
 	if (password) {
