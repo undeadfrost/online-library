@@ -19,7 +19,7 @@ class BookBorrow extends Component {
 		return (
 			<Fragment>
 				<BorrowActionBar title={"图书借阅"} getBookBorrows={this.props.fetchBorrows}/>
-				<BorrowTable/>
+				<BorrowTable getBookBorrows={this.props.fetchBorrows}/>
 			</Fragment>
 		)
 	}

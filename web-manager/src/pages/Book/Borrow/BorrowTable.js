@@ -1,6 +1,8 @@
-import React, { Component } from 'react'
-import { Table, Divider, Popconfirm, message } from 'antd'
-import { connect } from 'react-redux'
+import React, {Component} from 'react'
+import {Table, Divider, Popconfirm, message} from 'antd'
+import {connect} from 'react-redux'
+import {withRouter} from 'react-router'
+import {fetchDelBookBorrow} from '../../../api/index'
 
 const rowSelection = {
 	onChange: (selectedRowKeys, selectedRows) => {
@@ -12,7 +14,7 @@ const rowSelection = {
 	}),
 };
 
-const mapStateToProps = state => ({ borrowList: state.borrowData.borrowList })
+const mapStateToProps = state => ({borrowList: state.borrowData.borrowList})
 
 class BorrowTable extends Component {
 	state = {
@@ -21,45 +23,45 @@ class BorrowTable extends Component {
 			dataIndex: 'id',
 		}, {
 			title: '图书编号',
-			dataIndex: 'book',
-			render: (book) => (
-				<span>{book.number}</span>
+			dataIndex: 'book.number',
+			render: (number) => (
+				<span>{number}</span>
 			)
 		}, {
 			title: '书名',
-			dataIndex: 'book',
-			render: (book) => (
-				<span>{book.bname}</span>
+			dataIndex: 'book.bname',
+			render: (bname) => (
+				<span>{bname}</span>
 			)
 		}, {
 			title: '作者',
-			dataIndex: 'book',
-			render: (book) => (
-				<span>{book.author}</span>
+			dataIndex: 'book.author',
+			render: (author) => (
+				<span>{author}</span>
 			)
 		}, {
 			title: '出版社',
-			dataIndex: 'book',
-			render: (book) => (
-				<span>{book.publishing}</span>
+			dataIndex: 'book.publishing',
+			render: (publishing) => (
+				<span>{publishing}</span>
 			)
 		}, {
 			title: '借阅人',
-			dataIndex: 'user_reader',
-			render: (user) => (
-				<span>{user.realName}</span>
+			dataIndex: 'user_reader.realName',
+			render: (realName) => (
+				<span>{realName}</span>
 			)
 		}, {
 			title: '身份证',
-			dataIndex: 'user_reader',
-			render: (user) => (
-				<span>{user.idCard}</span>
+			dataIndex: 'user_reader.idCard',
+			render: (idCard) => (
+				<span>{idCard}</span>
 			)
 		}, {
 			title: '手机号',
-			dataIndex: 'user_reader',
-			render: (user) => (
-				<span>{user.mobile}</span>
+			dataIndex: 'user_reader.mobile',
+			render: (mobile) => (
+				<span>{mobile}</span>
 			)
 		}, {
 			title: '操作',
@@ -70,7 +72,7 @@ class BorrowTable extends Component {
 				<a onClick={() => {
 					this.configuration(record)
 				}}>配置</a>
-				<Divider type="vertical" />
+				<Divider type="vertical"/>
 				<Popconfirm
 					placement="topRight"
 					title="是否删除该菜单?"
@@ -82,11 +84,22 @@ class BorrowTable extends Component {
 			</span>)
 		}]
 	}
-
-	delConfirm = (id) => {
-
+	
+	configuration = (record) => {
+		const {id} = record
+		this.props.history.push(`/admin/book/borrow/${id}`)
 	}
-
+	
+	delConfirm = (id) => {
+		fetchDelBookBorrow({borrowId: id}).then(res => {
+			if (res.code === 0) {
+				this.props.getBookBorrows()
+			} else {
+				message.error(res.msg)
+			}
+		})
+	}
+	
 	render() {
 		const dataSource = this.props.borrowList
 		return (
@@ -95,9 +108,9 @@ class BorrowTable extends Component {
 				bordered
 				rowSelection={rowSelection}
 				columns={this.state.columns}
-				dataSource={dataSource} />
+				dataSource={dataSource}/>
 		)
 	}
 }
 
-export default connect(mapStateToProps)(BorrowTable)
+export default withRouter((connect(mapStateToProps)(BorrowTable)))

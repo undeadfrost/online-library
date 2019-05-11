@@ -11,6 +11,7 @@ import BookInformation from '../pages/Book/Information/index'
 import UserReader from '../pages/User/Reader/index'
 import BookBorrow from '../pages/Book/Borrow/index'
 import BorrowHistory from '../pages/Book/History/index'
+import BorrowConfiguration from '../pages/Book/Borrow/BorrowConfiguration'
 import _404 from '../pages/Error/_404'
 
 class ContentRoute extends React.Component {
@@ -27,6 +28,7 @@ class ContentRoute extends React.Component {
 				<PermissionRoute path='/admin/book/types' component={BookTypes}/>
 				<PermissionRoute path='/admin/book/information' component={BookInformation}/>
 				<PermissionRoute path='/admin/book/borrow' component={BookBorrow}/>
+				<PermissionRoute path='/admin/book/borrow/:id' component={BorrowConfiguration}/>
 				<PermissionRoute path='/admin/book/history' component={BorrowHistory}/>
 				<PermissionRoute path='/admin/user/reader' component={UserReader}/>
 				<Route path='*' component={_404}/>
