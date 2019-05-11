@@ -3,7 +3,7 @@ import React, {Component} from 'react'
 class BorrowConfiguration extends Component {
 	render() {
 		return (
-			<div>{this.props.id}</div>
+			<div>{this.props.match.params.id}</div>
 		)
 	}
 }

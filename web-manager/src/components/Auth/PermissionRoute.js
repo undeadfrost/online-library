@@ -22,13 +22,19 @@ class PermissionRoute extends Component {
 	}
 	
 	componentDidUpdate = async (prevProps) => {
-		if (prevProps.location.pathname !== this.props.location.pathname) {
+		if (prevProps.location.pathname !== this.props.location.pathname
+			&& prevProps.location.pathname !== this.props.nodeRoute) {
 			await this.checkAuth()
 		}
 	}
 	
 	checkAuth = async () => {
-		const pathname = this.props.location.pathname
+		let pathname = ''
+		if (this.props.nodeRoute) {
+			pathname = this.props.nodeRoute
+		} else {
+			pathname = this.props.location.pathname
+		}
 		let authRes = await fetchRouteAuth({route: pathname})
 		if (!authRes['isAuth']) {
 			message.error(authRes.msg, 5)
