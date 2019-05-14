@@ -225,6 +225,43 @@ bookService.getBookBorrows = async (number, bname = "", realName = "", keyword =
 	})
 }
 
+bookService.addBookBorrow = async (number, idCard) => {
+	const book = Books.findOne({where: {number: number}})
+	const user = UserReader.findOne({where: {idCard: idCard}})
+	const borrow = BookBorrow.findOne({
+		include: [{
+			model: Books,
+			attributes: ['number']
+		}],
+		where: {
+			'$book.number$': number
+		}
+	})
+	const info = await Promise.all([book, user, borrow])
+	if (info[2]) {
+		return {code: 1, msg: '图书已被借阅！'}
+	} else {
+		if (!info[0]) {
+			return {code: 1, msg: '编号有误！'}
+		}
+		if (!info[1]) {
+			return {code: 1, msg: '身份证号有误！'}
+		}
+	}
+	try {
+		await BookBorrow.create({
+			bookId: info[0].id,
+			userId: info[1].id,
+			status: 0,
+			borrow_time: new Date(),
+			return_time: null
+		})
+		return {code: 0, msg: '借阅成功'}
+	} catch (e) {
+		return {code: 1, msg: '服务器错误！'}
+	}
+}
+
 bookService.delBookBorrow = async (borrowId) => {
 	try {
 		await BookBorrow.destroy({where: {id: borrowId}})
@@ -247,5 +284,10 @@ bookService.getBookBorrowInfo = async (borrowId) => {
 			id: borrowId
 		}
 	})
+}
+
+
+bookService.putBookBorrowInfo = async (borrowId) => {
+
 }
 module.exports = bookService

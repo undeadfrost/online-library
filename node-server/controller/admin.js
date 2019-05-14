@@ -381,4 +381,11 @@ adminController.getBookBorrowInfo = () => {
 	}
 }
 
+adminController.putBookBorrowInfo = () => {
+	return async ctx => {
+		const {borrowId} = ctx.request.body
+		ctx.body = await bookService.putBookBorrowInfo(borrowId)
+	}
+}
+
 module.exports = adminController

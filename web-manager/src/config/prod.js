@@ -1,4 +1,4 @@
-const baseUrl = 'http://library.service.undeadfrost.cn'
+const baseUrl = '//library.service.undeadfrost.cn'
 
 export default {
 	baseUrl: baseUrl,

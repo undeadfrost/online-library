@@ -69,5 +69,6 @@ router.get('/book/borrows', permissionCheck('sys:bookBorrow:list'), adminControl
 router.post('/book/borrow', permissionCheck('sys:bookBorrow:save'), adminController.addBookBorrow())
 router.delete('/book/borrow', permissionCheck('sys:bookBorrow:delete'), adminController.delBookBorrow())
 router.get('/book/borrow', permissionCheck('sys:bookBorrow:info'), adminController.getBookBorrowInfo())
+router.put('/book/borrow', permissionCheck('sys:bookBorrow:update'), adminController.putBookBorrowInfo())
 
 module.exports = router
