@@ -71,7 +71,7 @@ class BorrowTable extends Component {
 			render: (text, record, index) => (<span>
 				<a onClick={() => {
 					this.configuration(record)
-				}}>配置</a>
+				}}>详情</a>
 				<Divider type="vertical"/>
 				<Popconfirm
 					placement="topRight"

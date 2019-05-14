@@ -233,4 +233,19 @@ bookService.delBookBorrow = async (borrowId) => {
 		return {code: 1, msg: '删除失败！'}
 	}
 }
+
+bookService.getBookBorrowInfo = async (borrowId) => {
+	return await BookBorrow.findOne({
+		include: [{
+			model: Books,
+			attributes: ['id', 'number', 'bname', 'author', 'publishing']
+		}, {
+			model: UserReader,
+			attributes: ['id', 'realName', 'idCard', 'mobile']
+		}],
+		where: {
+			id: borrowId
+		}
+	})
+}
 module.exports = bookService

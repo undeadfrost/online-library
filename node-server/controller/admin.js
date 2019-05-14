@@ -374,4 +374,11 @@ adminController.delBookBorrow = () => {
 	}
 }
 
+adminController.getBookBorrowInfo = () => {
+	return async ctx => {
+		const {borrowId} = ctx.query
+		ctx.body = await bookService.getBookBorrowInfo(borrowId)
+	}
+}
+
 module.exports = adminController

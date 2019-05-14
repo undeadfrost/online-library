@@ -157,3 +157,7 @@ export const fetchAddBookBorrow = (params) => {
 export const fetchDelBookBorrow = (params) => {
 	return http('delete', '/admin/book/borrow', params)
 }
+
+export const fetchGetBookBorrowInfo = (params) => {
+	return http('get', '/admin/book/borrow', params)
+}
