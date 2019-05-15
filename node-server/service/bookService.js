@@ -2,6 +2,7 @@ const BookType = require('../models/BookType')
 const Books = require('../models/Books')
 const BookBorrow = require('../models/BookBorrow')
 const UserReader = require('../models/UserReader')
+const BorrowRecord = require('../models/BookBorrowRecord')
 const Sequelize = require('sequelize')
 const fs = require('fs')
 const path = require('path')
@@ -226,9 +227,9 @@ bookService.getBookBorrows = async (number, bname = "", realName = "", keyword =
 }
 
 bookService.addBookBorrow = async (number, idCard) => {
-	const book = Books.findOne({where: {number: number}})
-	const user = UserReader.findOne({where: {idCard: idCard}})
-	const borrow = BookBorrow.findOne({
+	const bookPromise = Books.findOne({where: {number: number}})
+	const userPromise = UserReader.findOne({where: {idCard: idCard}})
+	const borrowPromise = BookBorrow.findOne({
 		include: [{
 			model: Books,
 			attributes: ['number']
@@ -237,21 +238,21 @@ bookService.addBookBorrow = async (number, idCard) => {
 			'$book.number$': number
 		}
 	})
-	const info = await Promise.all([book, user, borrow])
-	if (info[2]) {
+	const [book, user, borrow] = await Promise.all([bookPromise, userPromise, borrowPromise])
+	if (borrow) {
 		return {code: 1, msg: '图书已被借阅！'}
 	} else {
-		if (!info[0]) {
+		if (!book) {
 			return {code: 1, msg: '编号有误！'}
 		}
-		if (!info[1]) {
+		if (!user) {
 			return {code: 1, msg: '身份证号有误！'}
 		}
 	}
 	try {
 		await BookBorrow.create({
-			bookId: info[0].id,
-			userId: info[1].id,
+			bookId: book.id,
+			userId: user.id,
 			status: 0,
 			borrow_time: new Date(),
 			return_time: null
@@ -272,7 +273,7 @@ bookService.delBookBorrow = async (borrowId) => {
 }
 
 bookService.getBookBorrowInfo = async (borrowId) => {
-	return await BookBorrow.findOne({
+	const borrowInfo = await BookBorrow.findOne({
 		include: [{
 			model: Books,
 			attributes: ['id', 'number', 'bname', 'author', 'publishing']
@@ -284,10 +285,31 @@ bookService.getBookBorrowInfo = async (borrowId) => {
 			id: borrowId
 		}
 	})
+	if (borrowInfo) {
+		return {code: 0, borrowInfo}
+	} else {
+		return {code: 1, msg: '参数无效!'}
+	}
 }
 
 
 bookService.putBookBorrowInfo = async (borrowId) => {
-
+	const borrow = await BookBorrow.findByPk(borrowId)
+	if (borrow) {
+		try {
+			await BorrowRecord.create({
+				bookId: borrow.bookId,
+				userId: borrow.userId,
+				borrow_time: borrow.borrow_time,
+				return_time: new Date()
+			})
+			await borrow.destroy({force: true})
+			return {code: 0, msg: '还书成功！'}
+		} catch (e) {
+			return {code: 1, msg: '系统出错！'}
+		}
+	} else {
+		return {code: 1, msg: '图书借阅记录不存在！'}
+	}
 }
 module.exports = bookService

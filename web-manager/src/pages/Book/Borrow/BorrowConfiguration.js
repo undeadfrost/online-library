@@ -1,6 +1,7 @@
 import React, {Component} from 'react'
-import {fetchGetBookBorrowInfo} from '../../../api/index'
-import {Button} from 'antd'
+import {withRouter} from 'react-router'
+import {fetchGetBookBorrowInfo, fetchReturnBook} from '../../../api/index'
+import {Button, message} from 'antd'
 import styles from './index.module.less'
 import moment from 'moment'
 
@@ -14,10 +15,25 @@ class BorrowConfiguration extends Component {
 	componentDidMount() {
 		const {params} = this.props.match
 		fetchGetBookBorrowInfo({borrowId: params.id}).then(res => {
-			const {user_reader: user, book, ...borrowInfo} = res
-			this.setState({
-				borrowInfo, user, book
-			})
+			if (res.code === 0) {
+				const {user_reader: user, book, ...borrowInfo} = res.borrowInfo
+				this.setState({
+					borrowInfo, user, book
+				})
+			} else {
+				message.error(res.msg)
+			}
+		})
+	}
+	
+	returnBook = (borrowId) => {
+		fetchReturnBook({borrowId}).then(res => {
+			if (res.code === 0) {
+				message.success(res.msg)
+				this.props.history.push('/admin/book/borrow')
+			} else {
+				message.error(res.msg)
+			}
 		})
 	}
 	
@@ -44,10 +60,10 @@ class BorrowConfiguration extends Component {
 						<p>出版社：{book.publishing}</p>
 					</div>
 				</div>
-				<Button type="primary">还书</Button>
+				<Button type="primary" onClick={this.returnBook.bind(this, borrowInfo.id)}>还书</Button>
 			</div>
 		)
 	}
 }
 
-export default BorrowConfiguration
+export default withRouter(BorrowConfiguration)

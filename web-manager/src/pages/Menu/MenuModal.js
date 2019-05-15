@@ -1,6 +1,6 @@
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
-import {Modal, Form} from 'antd'
+import {Modal, Form, message} from 'antd'
 import {fetchPutMenuInfo, fetchGetMenuInfo} from '../../api/index'
 import CatalogForm from '../../components/ActionBar/menu/CatalogForm'
 import MenuForm from '../../components/ActionBar/menu/MenuForm'
@@ -20,9 +20,14 @@ class MenuModal extends Component {
 				values.type = this.state.type
 				values.menuId = this.props.menuId
 				const putMenuInfoRes = await fetchPutMenuInfo(values)
-				this.props.setVisible(false)
-				this.props.form.resetFields()
-				this.props.getMenus()
+				if (putMenuInfoRes.code === 0) {
+					this.props.setVisible(false)
+					this.props.form.resetFields()
+					this.props.getMenus()
+				} else {
+					message.error(putMenuInfoRes.msg)
+				}
+				
 			}
 		})
 	}

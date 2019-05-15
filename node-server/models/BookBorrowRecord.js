@@ -34,6 +34,6 @@ const BookBorrowRecord = sequelize.define('book_borrow_record', {
 		allowNull: false,
 		type: Sequelize.DATE,
 	}
-})
+}, {timestamps: false})
 
 module.exports = BookBorrowRecord

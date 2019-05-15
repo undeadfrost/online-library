@@ -28,7 +28,7 @@ class BorrowActionBar extends Component {
 				fetchAddBookBorrow(values).then(res => {
 					if (res.code === 0) {
 						this.setState({visible: false})
-						this.props.getBookBorrows(values)
+						this.props.getBookBorrows()
 						message.success(res.msg)
 					} else {
 						this.setState({error: res.msg})
