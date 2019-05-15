@@ -1,7 +1,7 @@
 import React, {Component} from 'react'
 import {withRouter} from 'react-router'
 import {fetchGetBookBorrowInfo, fetchReturnBook} from '../../../api/index'
-import {Button, message} from 'antd'
+import {Button, message, Modal} from 'antd'
 import styles from './index.module.less'
 import moment from 'moment'
 
@@ -26,6 +26,18 @@ class BorrowConfiguration extends Component {
 		})
 	}
 	
+	onOk = () => {
+		Modal.confirm({
+			title: '信息核对',
+			content: '请仔细核对信息，无误后确认还书！',
+			cancelText: '取消',
+			okText: '确认',
+			onOk: () => {
+				this.returnBook(this.state.borrowInfo.id)
+			}
+		})
+	}
+	
 	returnBook = (borrowId) => {
 		fetchReturnBook({borrowId}).then(res => {
 			if (res.code === 0) {
@@ -39,7 +51,6 @@ class BorrowConfiguration extends Component {
 	
 	render() {
 		const {borrowInfo, user, book} = this.state
-		console.log(this.state)
 		return (
 			<div className={styles.configuration}>
 				<div>
@@ -60,7 +71,7 @@ class BorrowConfiguration extends Component {
 						<p>出版社：{book.publishing}</p>
 					</div>
 				</div>
-				<Button type="primary" onClick={this.returnBook.bind(this, borrowInfo.id)}>还书</Button>
+				<Button type="primary" onClick={this.onOk}>还书</Button>
 			</div>
 		)
 	}
