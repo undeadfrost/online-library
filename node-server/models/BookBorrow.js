@@ -38,7 +38,7 @@ const BookBorrow = sequelize.define('book_borrow', {
 	}
 }, {freezeTableName: true, timestamps: false})
 
-module.exports = BookBorrow;
-
 BookBorrow.belongsTo(Books)
 BookBorrow.belongsTo(UserReader,{foreignKey: 'userId'})
+
+module.exports = BookBorrow;

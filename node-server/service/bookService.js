@@ -312,4 +312,52 @@ bookService.putBookBorrowInfo = async (borrowId) => {
 		return {code: 1, msg: '图书借阅记录不存在！'}
 	}
 }
+
+bookService.getBorrowHistorys = async (number, bname = "", realName = "", keyword = "") => {
+	let where = {}
+	if (number) {
+		where['$book.number$'] = number
+	}
+	return await BorrowRecord.findAll({
+		include: [{
+			model: Books,
+			attributes: ['id', 'number', 'bname', 'author', 'publishing']
+		}, {
+			model: UserReader,
+			attributes: ['id', 'realName', 'idCard', 'mobile']
+		}],
+		where: {
+			...where,
+			'$book.bname$': {
+				[Op.like]: `%${bname}%`
+			},
+			'$user_reader.realName$': {
+				[Op.like]: `%${realName}%`
+			},
+			[Op.or]: [
+				{
+					'$book.author$': {
+						[Op.like]: `%${keyword}%`
+					},
+				},
+				{
+					'$book.publishing$': {
+						[Op.like]: `%${keyword}%`
+					},
+				},
+				{
+					'$user_reader.idCard$': {
+						[Op.like]: `%${keyword}%`
+					},
+				},
+				{
+					'$user_reader.mobile$': {
+						[Op.like]: `%${keyword}%`
+					}
+				}
+			]
+		}
+	})
+}
+
 module.exports = bookService

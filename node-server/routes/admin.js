@@ -71,4 +71,6 @@ router.delete('/book/borrow', permissionCheck('sys:bookBorrow:delete'), adminCon
 router.get('/book/borrow', permissionCheck('sys:bookBorrow:info'), adminController.getBookBorrowInfo())
 router.put('/book/borrow', permissionCheck('sys:bookBorrow:update'), adminController.putBookBorrowInfo())
 
+// 借阅历史
+router.get('/book/historys', permissionCheck('sys:borrowHistory:list'), adminController.getBorrowHistorys())
 module.exports = router

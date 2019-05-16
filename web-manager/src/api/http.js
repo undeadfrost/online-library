@@ -76,18 +76,7 @@ const http = (method, url, params, config = {headers: {'Content-Type': 'applicat
 		params ? params.t = new Date().getTime() : params = {t: new Date().getTime()}
 		params = {params: params}
 	}
-	return instance[method](url, params,config)
-	// return new Promise((resolve, reject) => {
-	// 	instance[method](url, params, config).then(response => {
-	// 		resolve(response)
-	// 	}, error => {
-	// 		reject(error)
-	// 	}).catch(error => {
-	// 		reject(error)
-	// 	})
-	// }).catch(error => {
-	// 	console.log(error)
-	// })
+	return instance[method](url, params, config)
 }
 
 export default http

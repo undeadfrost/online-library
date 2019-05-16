@@ -36,4 +36,7 @@ const BookBorrowRecord = sequelize.define('book_borrow_record', {
 	}
 }, {timestamps: false})
 
+BookBorrowRecord.belongsTo(Books)
+BookBorrowRecord.belongsTo(UserReader,{foreignKey: 'userId'})
+
 module.exports = BookBorrowRecord

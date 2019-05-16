@@ -165,3 +165,7 @@ export const fetchGetBookBorrowInfo = (params) => {
 export const fetchReturnBook = (params) => {
 	return http('put', '/admin/book/borrow', params)
 }
+
+export const fetchBorrowHistorys = (params) => {
+	return http('get', '/admin/book/historys', params)
+}

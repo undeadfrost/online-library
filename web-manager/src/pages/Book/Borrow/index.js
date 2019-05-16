@@ -2,7 +2,6 @@ import React, {Component, Fragment} from 'react'
 import {connect} from 'react-redux'
 import {bindActionCreators} from 'redux'
 import BorrowActionBar from '../../../components/ActionBar/borrow/BorrowActionBar'
-import {fetchGetBookBorrows} from '../../../api/index'
 import {fetchBorrows} from '../../../redux/actions/borrow.actions'
 import BorrowTable from './BorrowTable'
 

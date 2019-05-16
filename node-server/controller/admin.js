@@ -351,7 +351,6 @@ adminController.putReaderUserInfo = () => {
 adminController.getBookBorrows = () => {
 	return async ctx => {
 		const {number, bname, realName, keyword} = ctx.query
-		console.log(number)
 		ctx.body = await bookService.getBookBorrows(number, bname, realName, keyword)
 	}
 }
@@ -385,6 +384,13 @@ adminController.putBookBorrowInfo = () => {
 	return async ctx => {
 		const {borrowId} = ctx.request.body
 		ctx.body = await bookService.putBookBorrowInfo(borrowId)
+	}
+}
+
+adminController.getBorrowHistorys = () => {
+	return async ctx => {
+		const {number, bname, realName, keyword} = ctx.query
+		ctx.body = await bookService.getBorrowHistorys(number, bname, realName, keyword)
 	}
 }
 
