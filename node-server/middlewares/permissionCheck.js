@@ -3,6 +3,11 @@ const sysUser = require('../models/SysUser')
 
 const Op = Sequelize.Op
 
+/**
+ * 权限校验中间件，适用于admin管理
+ * @param permission
+ * @return {Function}
+ */
 const permissionChenk = (permission) => {
     return async (ctx, next) => {
         const {id} = ctx.state.user
