@@ -44,6 +44,7 @@ class MenuActionBar extends Component {
 	
 	handleCancel = () => {
 		this.setState({visible: false})
+		this.props.form.resetFields()
 	}
 	
 	onChange = (e) => {
